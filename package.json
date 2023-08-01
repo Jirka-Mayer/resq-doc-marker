@@ -13,5 +13,8 @@
     "doc-marker": "https://github.com/Jirka-Mayer/doc-marker",
     "parcel": "^2.8.0",
     "process": "^0.11.10"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }
