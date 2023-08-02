@@ -6,7 +6,8 @@ bootstrapDocMarker({
   element: document.getElementById("doc-marker"),
   customization: {
     name: "DocMarker for RES-Q+",
-    version: packageJson.version
+    version: packageJson.version,
+    appBarLogoUrl: new URL("./resq-logo.png", import.meta.url)
   },
   locales: {
     ...localeDefinitions
