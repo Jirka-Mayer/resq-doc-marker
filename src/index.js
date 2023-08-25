@@ -1,4 +1,4 @@
-import { bootstrapDocMarker } from "doc-marker"
+import { bootstrapDocMarker, defaultOptions } from "doc-marker"
 import packageJson from "../package.json"
 import localeDefinitions from "../locales/index.js"
 import formDefinitions from "../forms/index.js"
@@ -17,5 +17,15 @@ bootstrapDocMarker({
     ...formDefinitions
   },
   defaultFormId: "Official ResQ 3.1.1",
+  formRenderersImporter: async () => {
+    const dmRenderers = await defaultOptions.formRenderersImporter()
+    const resqRenderers = (await import("./formRenderersAndCells.js")).formRenderers
+    return [...dmRenderers, ...resqRenderers]
+  },
+  formCellsImporter: async () => {
+    const dmCells = await defaultOptions.formCellsImporter()
+    const resqCells = (await import("./formRenderersAndCells.js")).formCells
+    return [...dmCells, ...resqCells]
+  },
   localStoragePrefix: "ResQPlus::"
 })
