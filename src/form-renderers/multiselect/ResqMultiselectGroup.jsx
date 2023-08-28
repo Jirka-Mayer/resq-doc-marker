@@ -105,7 +105,10 @@ export function ResqMultiselectGroup(props) {
       leaderPath: leaderPath,
       inSubGroup: false
     }}>
-      <Paper sx={{ display: visible ? "block" : "none" }}>
+      <Paper sx={{
+        display: visible ? "block" : "none",
+        ml: 2, mt: 2 // the controls themselves have margin, grid does not
+      }}>
         <JsonFormsDispatch
           uischema={leaderUischema}
           schema={schema}

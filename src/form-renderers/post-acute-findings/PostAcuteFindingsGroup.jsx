@@ -34,7 +34,10 @@ export function ResqPostAcuteFindingsGroup(props) {
     <PostAcuteFindingsContext.Provider value={{
       groupVisible: visible
     }}>
-      <Paper sx={{ display: visible ? "block" : "none" }}>
+      <Paper sx={{
+        display: visible ? "block" : "none",
+        ml: 2, mt: 2 // the controls themselves have margin, grid does not
+      }}>
         <InputLabel
           className={styles["field-label"]}
         >{ label || "[missing group label]" }</InputLabel>
