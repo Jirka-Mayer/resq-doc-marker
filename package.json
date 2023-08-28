@@ -10,7 +10,7 @@
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.2",
     "buffer": "^6.0.3",
-    "doc-marker": "https://github.com/Jirka-Mayer/doc-marker",
+    "doc-marker": "github:Jirka-Mayer/doc-marker#v0.5.0",
     "parcel": "^2.8.0",
     "process": "^0.11.10"
   },
