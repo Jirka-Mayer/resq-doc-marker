@@ -27,14 +27,8 @@ npm run build
 ```
 
 
-## Developing together with DocMarker
+## Joint development with Doc Marker
 
-Clone the [DocMarker repository](https://github.com/Jirka-Mayer/doc-marker) and then tell NPM to symlink the `doc-marker` dependency in your `package.json` with the DocMarker clone:
+Normally, you can develop this DocMarker customization like any other node project, treating the `doc-marker` package as an external dependency (as a library). But very often you may need to develop the two together jointly - making changes in both and immediately observing the results.
 
-```
-npm link ../../path-to-clone-of/doc-marker
-```
-
-Also, `npm install` must be run inside the DocMarker clone to resolve its dependencies. They will not be installed in this project's `node_modules`, unfortunately.
-
-This way you can work on both projects simultaneously and immediately test changes made to the DocMarker library. The only problem is that Parcel does not detect file changes in the DocMarker, because it's behind a symlink. You need to restart parcel to see the changes.
+For this setup, check out the [`joint-development` folder](./joint-development).
