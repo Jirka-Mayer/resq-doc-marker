@@ -19,6 +19,10 @@ function BodyGroupLayout(props) {
     data
   } = props
 
+  const {
+    isGroupVisible
+  } = React.useContext(MultiselectGroupContext)
+
   const elements = uischema.elements
 
   if (elements.length === 0)
@@ -44,7 +48,8 @@ function BodyGroupLayout(props) {
     <MultiselectGroupContext.Provider value={{
       leaderValue: leaderValue,
       leaderPath: leaderPath,
-      inSubGroup: true
+      inSubGroup: true,
+      isGroupVisible: isGroupVisible
     }}>
       { elements.map((child, index) => (
         <div

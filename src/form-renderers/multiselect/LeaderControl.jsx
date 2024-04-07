@@ -4,6 +4,7 @@ import { withJsonFormsControlProps, withTranslateProps } from '@jsonforms/react'
 import { FormHelperText, Divider, IconButton, FormControlLabel, InputLabel, Radio, RadioGroup, Tooltip } from '@mui/material'
 import { useMemo } from "react"
 import StreamIcon from '@mui/icons-material/Stream'
+import { MultiselectGroupContext } from './MultiselectGroupContext'
 
 // DocMarker API imports
 import { stateApi, formApi } from "doc-marker"
@@ -47,6 +48,10 @@ function LeaderControl(props) {
     handleChange
   } = props
 
+  const {
+    isGroupVisible
+  } = React.useContext(MultiselectGroupContext)
+
   const fieldId = path // field ID is defined to be the path in the form data
   const htmlId = id + "-input"
 
@@ -84,7 +89,7 @@ function LeaderControl(props) {
   // === value export ===
 
   useExportValue(path,
-    visible ? data : undefined
+    isGroupVisible ? data : undefined
   )
 
 

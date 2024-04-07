@@ -103,7 +103,8 @@ export function ResqMultiselectGroup(props) {
     <MultiselectGroupContext.Provider value={{
       leaderValue: leaderValue,
       leaderPath: leaderPath,
-      inSubGroup: false
+      inSubGroup: false,
+      isGroupVisible: visible
     }}>
       <Paper sx={{
         display: visible ? "block" : "none",
