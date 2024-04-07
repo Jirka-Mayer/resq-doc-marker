@@ -1,0 +1,7 @@
+/node_modules/
+/doc-marker/
+/resq-customization/
+/package-lock.json
+/package.json
+/.parcel-cache/
+/dist/
