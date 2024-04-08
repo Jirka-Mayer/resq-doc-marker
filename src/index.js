@@ -1,7 +1,11 @@
+// perform interception before anything starts happening
+import "./uploading/pageLoadingIntercept";
+
 import { bootstrapDocMarker, defaultOptions } from "doc-marker"
 import packageJson from "../package.json"
 import localeDefinitions from "../locales/index.js"
 import formDefinitions from "../forms/index.js"
+import * as slots from "./slots.jsx"
 
 bootstrapDocMarker({
   element: document.getElementById("doc-marker"),
@@ -27,5 +31,13 @@ bootstrapDocMarker({
     const resqCells = (await import("./formRenderersAndCells.js")).formCells
     return [...dmCells, ...resqCells]
   },
-  localStoragePrefix: "ResQPlus::"
+  localStoragePrefix: "ResQPlus::",
+  
+  // slots are now loaded synchronously, but should that be a problem,
+  // you can switch to asynchronous loading after the doc marker bootstraps
+  // (in which case don't forget to remove the slots import at the top)
+  slots: { ...slots }
+  // slotsImporter: async () => {
+  //   return await import("./slots.jsx")
+  // }
 })
