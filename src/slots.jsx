@@ -1,4 +1,5 @@
 import React from "react"
+import { ToolsMenuExtension } from "./ToolsMenuExtension"
 import { UploadDialog } from "./uploading/UploadDialog"
 
 /*
@@ -8,3 +9,7 @@ import { UploadDialog } from "./uploading/UploadDialog"
 export const dialogs = (<>
   <UploadDialog/>
 </>)
+
+export const toolsMenu = (
+  <ToolsMenuExtension/>
+)
