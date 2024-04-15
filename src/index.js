@@ -6,6 +6,7 @@ import packageJson from "../package.json"
 import localeDefinitions from "../locales/index.js"
 import formDefinitions from "../forms/index.js"
 import * as slots from "./slots.jsx"
+import * as resqMetadataStore from "./state/resqMetadataStore"
 
 bootstrapDocMarker({
   element: document.getElementById("doc-marker"),
@@ -32,6 +33,22 @@ bootstrapDocMarker({
     return [...dmCells, ...resqCells]
   },
   localStoragePrefix: "ResQPlus::",
+
+  file: {
+    currentVersion: 1,
+    migrations: [],
+    onCreateEmpty: (fileJson) => {
+      resqMetadataStore.createEmptyFileJson(fileJson);
+      return fileJson;
+    },
+    onSerialize: (fileJson) => {
+      resqMetadataStore.serializeToFileJson(fileJson);
+      return fileJson;
+    },
+    onDeserialize: (fileJson) => {
+      resqMetadataStore.deserializeFromFileJson(fileJson);
+    }
+  },
   
   // slots are now loaded synchronously, but should that be a problem,
   // you can switch to asynchronous loading after the doc marker bootstraps

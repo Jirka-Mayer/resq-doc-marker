@@ -80,4 +80,15 @@ export class ResqApiConnection {
 
     return data as ResqUser;
   }
+
+  /**
+   * Uploads (creates or updates) a file as a case to the RES-Q registry
+   * and returns the (possibly new) case ID
+   */
+  public async uploadFileToRegistry(
+    currentCaseId: string | null
+  ): Promise<string> {
+    // TODO ...
+    return "TODO: get the case ID";
+  }
 }

@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { useAtom } from "jotai";
 import { atom } from "jotai/vanilla";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import {
   openUploadDialog,
@@ -40,11 +40,13 @@ export function UploadDialog() {
   const [isOpen, setIsOpen] = useAtom<boolean>(isOpenAtom);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [file, setFile] = useState<any>(null);
+  const fileRef = useRef<any>(null);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [fileAlreadyUploaded, setFileAlreadyUploaded] =
+    useState<boolean>(false);
 
   const [authError, setAuthError] = useState<string | null>(null);
-  const [connection, setConnection] = useState<ResqApiConnection | null>(null);
+  const connectionRef = useRef<ResqApiConnection | null>(null);
   const [user, setUser] = useState<ResqUser | null>(null);
 
   const [uploadToResq, setUploadToResq] = useState<boolean>(false);
@@ -53,6 +55,7 @@ export function UploadDialog() {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadDone, setUploadDone] = useState<boolean>(false);
+  const [caseId, setCaseId] = useState<string | null>(null);
 
   async function handleDialogOpenning() {
     if (authorizationCode === null) {
@@ -64,10 +67,13 @@ export function UploadDialog() {
 
     // reset state
     setAuthError(null);
-    setConnection(null);
+    connectionRef.current = null;
     setUser(null);
     setUploadDone(false);
     setIsUploading(false);
+    setUploadError(null);
+    setFileAlreadyUploaded(false);
+    setCaseId(null);
 
     // load the file
     const file = stateApi.FileStorage.loadFile(fileUuid);
@@ -75,8 +81,10 @@ export function UploadDialog() {
       setIsOpen(false);
       return;
     }
-    setFile(file);
+    fileRef.current = file;
     setFileName(file.constructFileName());
+    setFileAlreadyUploaded(typeof(file.body["uploadedAt"]) === "string");
+    setCaseId(file.body["resqCaseId"] || null);
 
     try {
       // setup API connection
@@ -87,7 +95,7 @@ export function UploadDialog() {
       // fetch user info
       const _user = await _connection.getAuthenticatedUser();
       
-      setConnection(_connection);
+      connectionRef.current = _connection;
       setUser(_user);
     } catch (e) {
       const err = e as Error;
@@ -104,23 +112,61 @@ export function UploadDialog() {
   }, [isOpen]);
 
   async function performUploading() {
+    if (!uploadToResq && !uploadToUfal) {
+      // TODO: translate
+      alert(
+        "Uploading to neither RES-Q, nor the Charles University. " +
+        "Check at least one of the two boxes."
+      );
+      return;
+    }
+
     setIsUploading(true);
     
     // reset state
     setUploadDone(false);
     setUploadError(null);
 
+    const _connection = connectionRef.current;
+    if (!_connection) {
+      throw new Error("Connection ref does not hold any connection.");
+    }
+
     try {
-      // resq upload first to get the case ID
-      console.log(file);
-      // then ufal upload
+      let _caseId = caseId;
+
+      if (uploadToResq) {
+        _caseId = await _connection.uploadFileToRegistry(
+          _caseId
+        );
+      }
+
+      if (uploadToUfal) {
+        // TODO: upload to ufal
+        console.log(fileRef.current.toJson());
+      }
+      
+      // rememberFileUpload(_caseId);
+      // setCaseId(_caseId);
+      
+      setUploadDone(true);
     } catch (e) {
       const err = e as Error;
       setUploadError(err.stack || (err.name + ": " + err.message));
     }
-
     setIsUploading(false);
-    setUploadDone(true);
+  }
+
+  /**
+   * Called when the file upload succeeds,
+   * stores the upload metadata in the file and saves the file
+   */
+  function rememberFileUpload(resqCaseId: string | null) {
+    const file = fileRef.current;
+    file.body["uploadedAt"] = new Date().toISOString();
+    file.body["uploadedByUser"] = user;
+    file.body["resqCaseId"] = resqCaseId;
+    stateApi.FileStorage.storeFile(file);
   }
 
   return (
@@ -156,14 +202,14 @@ export function UploadDialog() {
 
           {/* UPLOADING CONTROLS */}
           {(user !== null) && (<>
-
-            {/* TODO: get the metadata from the file */}
-            <Alert severity="warning" sx={{mb: 2}}>
-              This file has already been uploaded,
-              are you sure you want to upload it again? You can upload
-              it again if you made changes to the file and you want to
-              propagate these changes to the RES-Q registry and Charles University.
-            </Alert>
+            {fileAlreadyUploaded && (
+              <Alert severity="warning" sx={{mb: 2}}>
+                This file has already been uploaded,
+                are you sure you want to upload it again? You can upload
+                it again if you made changes to the file and you want to
+                propagate these changes to the RES-Q registry and Charles University.
+              </Alert>
+            )}
 
             <Alert severity="info" sx={{mb: 2}}>
               You are logged in as:<br/>
@@ -258,7 +304,11 @@ export function UploadDialog() {
               updated.<br />
               <br />
               Case ID in the RES-Q registry:<br />
-              <strong>To be added...</strong>
+              {caseId ? (
+                <strong>To be added...</strong>
+              ) : (
+                <em>The file was not yet uploaded to the RES-Q registry.</em>
+              )}
             </Alert>
           )}
 
