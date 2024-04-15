@@ -1,10 +1,14 @@
 import config from "../config";
+import { getCallbackUrl } from "./getCallbackUrl";
 
 /**
  * Calling this function redirects the user agent to the RES-Q auth server
  * and starts the login sequence with the provided file UUID
  */
 export function redirectToResq(uuid: string) {
+  // Based on the OAuth 2 specification:
+  // https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1
+
   const url = new URL(config.keycloakAuthUrl);
   
   // what OAuth client is making the authentication request
@@ -17,11 +21,7 @@ export function redirectToResq(uuid: string) {
   url.searchParams.append("response_type", "code");
 
   // where to redirect after the authentication completes
-  const redirect_uri = new URL(
-    window.location.href.replace(window.location.search, "")
-  );
-  redirect_uri.searchParams.append("keycloakCallback", "true");
-  url.searchParams.append("redirect_uri", redirect_uri.href);
+  url.searchParams.append("redirect_uri", getCallbackUrl());
 
   // what state information to send with the redirect callback
   url.searchParams.append("state", uuid);

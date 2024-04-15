@@ -20,11 +20,17 @@ import { useAtom } from "jotai";
 import { atom } from "jotai/vanilla";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { openUploadDialog, authorizationCode, fileUuid } from "./pageLoadingIntercept";
+import {
+  openUploadDialog,
+  authorizationCode,
+  fileUuid,
+  useDummyConnection,
+} from "./pageLoadingIntercept";
 import { ResqApiConnection } from "./ResqApiConnection";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { stateApi } from "doc-marker";
-import { redirectToResq } from "./redirectToResq";
+import { ResqUser } from "../resq-model/ResqUser";
+import { DummyConnection } from "./DummyConnection";
 
 export const isOpenAtom = atom(openUploadDialog);
 
@@ -37,8 +43,9 @@ export function UploadDialog() {
   const [file, setFile] = useState<any>(null);
   const [fileName, setFileName] = useState<string | null>(null);
 
-  const [resqUserId, setResqUserId] = useState<string | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [connection, setConnection] = useState<ResqApiConnection | null>(null);
+  const [user, setUser] = useState<ResqUser | null>(null);
 
   const [uploadToResq, setUploadToResq] = useState<boolean>(false);
   const [uploadToUfal, setUploadToUfal] = useState<boolean>(true);
@@ -53,8 +60,14 @@ export function UploadDialog() {
       return;
     }
 
-    setUploadDone(false);
     setIsLoading(true);
+
+    // reset state
+    setAuthError(null);
+    setConnection(null);
+    setUser(null);
+    setUploadDone(false);
+    setIsUploading(false);
 
     // load the file
     const file = stateApi.FileStorage.loadFile(fileUuid);
@@ -63,16 +76,25 @@ export function UploadDialog() {
       return;
     }
     setFile(file);
-    setFileName(file.constructFileName())
+    setFileName(file.constructFileName());
 
-    // setup API connection
-    const connection = await ResqApiConnection.connect(authorizationCode);
+    try {
+      // setup API connection
+      const _connection = useDummyConnection
+        ? new DummyConnection() // add &dummy=true to the URL to use this
+        : await ResqApiConnection.connect(authorizationCode);
 
-    setAuthError("Lorem ipsum\nDolor sit\nAmet")
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1_000);
+      // fetch user info
+      const _user = await _connection.getAuthenticatedUser();
+      
+      setConnection(_connection);
+      setUser(_user);
+    } catch (e) {
+      const err = e as Error;
+      setAuthError(err.stack || (err.name + ": " + err.message));
+    }
+    
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -80,6 +102,26 @@ export function UploadDialog() {
       handleDialogOpenning();
     }
   }, [isOpen]);
+
+  async function performUploading() {
+    setIsUploading(true);
+    
+    // reset state
+    setUploadDone(false);
+    setUploadError(null);
+
+    try {
+      // resq upload first to get the case ID
+      console.log(file);
+      // then ufal upload
+    } catch (e) {
+      const err = e as Error;
+      setUploadError(err.stack || (err.name + ": " + err.message));
+    }
+
+    setIsUploading(false);
+    setUploadDone(true);
+  }
 
   return (
     <Dialog
@@ -103,100 +145,122 @@ export function UploadDialog() {
         </DialogContent>
       ) : (
         <DialogContent dividers>
-          <Alert severity="error" sx={{mb: 2}}>
-            Authentication has failed. Try uploading the file again.<br/>
-            <pre>{ authError }</pre>
-          </Alert>
-
-          <Alert severity="warning" sx={{mb: 2}}>
-            This file has already been uploaded,
-            are you sure you want to upload it again? You can upload
-            it again if you made changes to the file and you want to
-            propagate these changes to the RES-Q registry and Charles University.
-          </Alert>
-
-          <Alert severity="info" sx={{mb: 2}}>
-            You are logged in as:<br/>
-            <strong>John Doe</strong><br />
-            Hospital XYZ
-          </Alert>
-
-          <Typography variant="body1" color="text.primary" gutterBottom>
-            By clicking the upload button you will upload the completed
-            file to the RES-Q registry and Charles University.
-          </Typography>
-
-          <Typography variant="subtitle2" color="text.primary">
-            File:
-          </Typography>
-          <Typography variant="body1" color="text.primary">
-            { fileName }
-          </Typography>
-          <Typography variant="body2" color="text.primary" gutterBottom>
-            ({ fileUuid })
-          </Typography>
-
-          <FormGroup>
-            <FormControlLabel
-              sx={{ alignItems: "flex-start" }}
-              disabled={true} // RES-Q upload is not implemented yet!
-              control={
-                <Checkbox
-                  // size="small"
-                  sx={{ marginTop: -1 }}
-                  checked={uploadToResq}
-                  onChange={() => setUploadToResq(!uploadToResq)}
-                />
-              }
-              slotProps={{
-                typography: {
-                  variant: "body1",
-                  color: "text.primary",
-                  gutterBottom: true,
-                },
-              }}
-              label="Upload file to the RES-Q registry (to be added...)"
-            />
-            <FormControlLabel
-              sx={{ alignItems: "flex-start" }}
-              control={
-                <Checkbox
-                  // size="small"
-                  sx={{ marginTop: -1 }}
-                  checked={uploadToUfal}
-                  onChange={() => setUploadToUfal(!uploadToUfal)}
-                />
-              }
-              slotProps={{
-                typography: {
-                  variant: "body1",
-                  color: "text.primary",
-                  gutterBottom: true,
-                },
-              }}
-              label="Upload file to Charles University"
-            />
-          </FormGroup>
           
-          <Alert
-            severity="info"
-            variant="outlined"
-            icon={<CircularProgress size={24} />}
-            sx={{mb: 2}}
-          >
-            Uploading...
-          </Alert>
+          {/* AUTH FAILED ERROR */}
+          {(authError !== null) && (
+            <Alert severity="error" sx={{mb: 2}}>
+              Authentication has failed. Try uploading the file again.<br/>
+              <pre style={{whiteSpace: "pre-wrap"}}>{ authError }</pre>
+            </Alert>
+          )}
 
-          <Alert severity="error" sx={{mb: 2}}>
-            Uploading has failed. Try uploading the file again.<br/>
-            <pre>{ uploadError }</pre>
-          </Alert>
+          {/* UPLOADING CONTROLS */}
+          {(user !== null) && (<>
 
-          <Alert severity="success" sx={{mb: 2}}>
-            Thank you for uploading the file. If you make any
-            changes to the file, you can upload it again and it will be
-            updated.
-          </Alert>
+            {/* TODO: get the metadata from the file */}
+            <Alert severity="warning" sx={{mb: 2}}>
+              This file has already been uploaded,
+              are you sure you want to upload it again? You can upload
+              it again if you made changes to the file and you want to
+              propagate these changes to the RES-Q registry and Charles University.
+            </Alert>
+
+            <Alert severity="info" sx={{mb: 2}}>
+              You are logged in as:<br/>
+              <strong>
+                {user.title} {user.firstName} {user.lastName}
+              </strong><br />
+              {user?.settings.currentProvider.name}
+            </Alert>
+
+            <Typography variant="body1" color="text.primary" gutterBottom>
+              By clicking the upload button you will upload the completed
+              file to the RES-Q registry and Charles University.
+            </Typography>
+
+            <Typography variant="subtitle2" color="text.primary">
+              File:
+            </Typography>
+            <Typography variant="body1" color="text.primary">
+              { fileName }
+            </Typography>
+            <Typography variant="body2" color="text.primary" gutterBottom>
+              ({ fileUuid })
+            </Typography>
+
+            <FormGroup>
+              <FormControlLabel
+                sx={{ alignItems: "flex-start" }}
+                disabled={true} // RES-Q upload is not implemented yet!
+                control={
+                  <Checkbox
+                    sx={{ marginTop: -1 }}
+                    checked={uploadToResq}
+                    onChange={() => setUploadToResq(!uploadToResq)}
+                  />
+                }
+                slotProps={{
+                  typography: {
+                    variant: "body1",
+                    color: "text.primary",
+                    gutterBottom: true,
+                  },
+                }}
+                label="Upload file to the RES-Q registry (to be added...)"
+              />
+              <FormControlLabel
+                sx={{ alignItems: "flex-start" }}
+                control={
+                  <Checkbox
+                    sx={{ marginTop: -1 }}
+                    checked={uploadToUfal}
+                    onChange={() => setUploadToUfal(!uploadToUfal)}
+                  />
+                }
+                slotProps={{
+                  typography: {
+                    variant: "body1",
+                    color: "text.primary",
+                    gutterBottom: true,
+                  },
+                }}
+                label="Upload file to Charles University"
+              />
+            </FormGroup>
+
+          </>)}
+          
+          {/* UPLOADING SPINNER */}
+          {isUploading && (
+            <Alert
+              severity="info"
+              variant="outlined"
+              icon={<CircularProgress size={24} />}
+              sx={{mb: 2}}
+            >
+              Uploading...
+            </Alert>
+          )}
+
+          {/* UPLOADING FAILED */}
+          {(uploadError !== null) && (
+            <Alert severity="error" sx={{mb: 2}}>
+              Uploading has failed. Try uploading the file again.<br/>
+              <pre style={{whiteSpace: "pre-wrap"}}>{ uploadError }</pre>
+            </Alert>
+          )}
+
+          {/* UPLOADING SUCCEEDED */}
+          {uploadDone && (
+            <Alert severity="success" sx={{mb: 2}}>
+              Thank you for uploading the file. If you make any
+              changes to the file, you can upload it again and it will be
+              updated.<br />
+              <br />
+              Case ID in the RES-Q registry:<br />
+              <strong>To be added...</strong>
+            </Alert>
+          )}
 
         </DialogContent>
       )}
@@ -205,17 +269,14 @@ export function UploadDialog() {
           variant="text"
           onClick={() => setIsOpen(false)}
         >
-          { (authError || uploadError || uploadDone) ? "Close" : t("cancel") /* TODO: translate */}
+          { (!user || uploadError || uploadDone) ? "Close" : t("cancel") /* TODO: translate */}
         </Button>
-        {(authError || uploadError || uploadDone) && (
+        {(user && !uploadError && !uploadDone) && (
           <Button
             autoFocus
             disabled={isLoading || isUploading || uploadDone}
             variant="contained"
-            onClick={() => {
-              // Do something!
-              setIsOpen(false);
-            }}
+            onClick={() => performUploading()}
             endIcon={<LocalShippingIcon/>}
           >
             Upload {/* TODO: translate */}
