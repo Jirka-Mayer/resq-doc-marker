@@ -31,6 +31,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { stateApi } from "doc-marker";
 import { ResqUser } from "../resq-model/ResqUser";
 import { DummyConnection } from "./DummyConnection";
+import { uploadFileToUfal } from "./uploadFileToUfal";
 
 export const isOpenAtom = atom(openUploadDialog);
 
@@ -135,20 +136,25 @@ export function UploadDialog() {
     try {
       let _caseId = caseId;
 
+      // first, upload to resq to get most-recent resq metadata to the file
       if (uploadToResq) {
         _caseId = await _connection.uploadFileToRegistry(
           _caseId
         );
       }
 
-      if (uploadToUfal) {
-        // TODO: upload to ufal
-        console.log(fileRef.current.toJson());
-      }
-      
+      // store this metadata in the file
       // rememberFileUpload(_caseId);
-      // setCaseId(_caseId);
-      
+
+      // now send the file to the Charles University
+      if (uploadToUfal) {
+        await uploadFileToUfal(
+          fileRef.current.toJson(),
+          _connection.accessToken
+        )
+      }
+
+      setCaseId(_caseId);
       setUploadDone(true);
     } catch (e) {
       const err = e as Error;

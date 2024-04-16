@@ -26,4 +26,16 @@ export interface Config {
    * needs to be white-listed in the keycloak configuration
    */
   oauthClientId: string,
+
+  /**
+   * URL where a finished file should be uploaded to,
+   * in order to upload it to the Charles University
+   */
+  ufalUploadUrl: string,
+
+  /**
+   * Should the Charles University upload be a development,
+   * or a production upload?
+   */
+  ufalUploadIsDevelopment: boolean,
 }

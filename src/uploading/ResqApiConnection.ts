@@ -9,7 +9,7 @@ export class ResqApiConnection {
   /**
    * The OAuth 2.0 access token needed to use the API
    */
-  private accessToken: string;
+  public readonly accessToken: string;
   
   constructor(accessToken: string) {
     this.accessToken = accessToken;
