@@ -1,0 +1,8 @@
+# Web server
+fastapi >= 0.97.0
+uvicorn[standard] >= 0.22.0
+
+# Development utils
+pytest >= 7.3.2
+httpx >= 0.24.1
+mypy
