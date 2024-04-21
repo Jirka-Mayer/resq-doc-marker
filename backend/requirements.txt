@@ -2,6 +2,9 @@
 fastapi >= 0.97.0
 uvicorn[standard] >= 0.22.0
 
+# Dependencies
+requests
+
 # Development utils
 pytest >= 7.3.2
 httpx >= 0.24.1

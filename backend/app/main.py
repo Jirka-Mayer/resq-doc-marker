@@ -1,10 +1,11 @@
 import os
 from typing import Annotated
-from fastapi import FastAPI, Header, Depends
+from fastapi import FastAPI, Header, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2PasswordBearer
 from .UploadFileRequest import UploadFileRequest
+from .verify_token import verify_token
 
 
 description = """
@@ -55,11 +56,11 @@ def upload_file(
     token: Annotated[str, Depends(oauth2_scheme)],
     request: UploadFileRequest
 ):
-    # TODO: verify the token against res-q (dev or prod based on the flag)
+    if not verify_token(token, request.is_development):
+        raise HTTPException(status_code=401, detail="Invalid bearer token")
+
+    print(request)
 
     # TODO: write the file to the storage (dev or prod based on the flag)
-    
-    print(token)
-    print(request)
     
     return {"message": "File was uploaded successfully."}

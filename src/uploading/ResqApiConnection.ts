@@ -48,10 +48,15 @@ export class ResqApiConnection {
       throw new Error(data.error + ": " + data.error_description);
     }
     
-    console.log("Authenticated:", data);
-    
-    // TODO ...
-    return new ResqApiConnection("... TODO ...");
+    if (!("access_token" in data)) {
+      throw new Error(
+        "Received data does not contain the 'access_token' field."
+      );
+    }
+
+    return new ResqApiConnection(
+      String(data["access_token"])
+    );
   }
 
   /**
