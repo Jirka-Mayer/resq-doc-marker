@@ -58,7 +58,7 @@ export function deserializeFromFileJson(json: object) {
  * Writes the store state into a given DocMarker AppFile JSON data object
  */
 export function serializeToFileJson(json: object) {
-  json["uploadedAt"] = jotaiStore.get(uploadedAtAtom)?.toISOString();
+  json["uploadedAt"] = jotaiStore.get(uploadedAtAtom)?.toISOString() || null;
   json["uploadedByUser"] = jotaiStore.get(uploadedByUserAtom);
   json["resqCaseId"] = jotaiStore.get(resqCaseIdAtom);
 }

@@ -6,6 +6,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2PasswordBearer
 from .UploadFileRequest import UploadFileRequest
 from .verify_token import verify_token
+from .store_file import store_file
 
 
 description = """
@@ -59,8 +60,6 @@ def upload_file(
     if not verify_token(token, request.is_development):
         raise HTTPException(status_code=401, detail="Invalid bearer token")
 
-    print(request)
-
-    # TODO: write the file to the storage (dev or prod based on the flag)
+    store_file(request.file_json, request.is_development)
     
     return {"message": "File was uploaded successfully."}

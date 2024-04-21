@@ -6,3 +6,6 @@ from pathlib import Path
 class Config:
     resqApiBaseUrl: str
     "Base URL for the RES-Q registry API"
+
+    uploadedFilesStoragePath: Path
+    "Path to a folder that should store the uploaded files"
