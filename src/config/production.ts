@@ -5,7 +5,7 @@ const config: Config = {
   keycloakAuthUrl: "https://auth.qualityregistry.org/realms/stroke/protocol/openid-connect/auth",
   keycloakTokenUrl: "https://auth.qualityregistry.org/realms/stroke/protocol/openid-connect/token",
   oauthClientId: "doc-marker",
-  ufalUploadUrl: "https://quest.ms.mff.cuni.cz/resq-plus/api/uploaded-file",
+  ufalUploadUrl: "https://quest.ms.mff.cuni.cz/resq-doc-marker/backend/uploaded-file",
   ufalUploadIsDevelopment: false,
 };
 
