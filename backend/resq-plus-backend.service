@@ -1,0 +1,11 @@
+[Unit]
+Description=RES-Q Plus Backend For File Uploading
+
+[Service]
+User=mayer
+WorkingDirectory=/home/mayer/backend-server/backend
+ExecStart=./service.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
