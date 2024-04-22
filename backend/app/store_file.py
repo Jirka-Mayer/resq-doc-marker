@@ -33,6 +33,6 @@ def store_file(file: dict, is_development: bool):
         )
 
     file_path.write_text(
-        data=json.dumps(file, ensure_ascii=True, indent=2),
+        data=json.dumps(file, ensure_ascii=False, indent=2),
         encoding="utf-8"
     )

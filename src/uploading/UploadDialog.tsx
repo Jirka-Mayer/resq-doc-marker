@@ -144,7 +144,7 @@ export function UploadDialog() {
       }
 
       // store this metadata in the file
-      // rememberFileUpload(_caseId);
+      rememberFileUpload(_caseId);
 
       // now send the file to the Charles University
       if (uploadToUfal) {
@@ -169,9 +169,31 @@ export function UploadDialog() {
    */
   function rememberFileUpload(resqCaseId: string | null) {
     const file = fileRef.current;
+    
     file.body["uploadedAt"] = new Date().toISOString();
-    file.body["uploadedByUser"] = user;
+    
+    if (user !== null) {
+      // keep only those fields that we care about and filter out
+      // things such as phone number, email address, date of registration, etc.
+      const prunedUser: ResqUser = {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        title: user.title,
+        settings: {
+          currentProvider: {
+            id: user.settings.currentProvider.id,
+            name: user.settings.currentProvider.name,
+          }
+        },
+      }
+      file.body["uploadedByUser"] = prunedUser;
+    } else {
+      file.body["uploadedByUser"] = null;
+    }
+
     file.body["resqCaseId"] = resqCaseId;
+    
     stateApi.FileStorage.storeFile(file);
   }
 
