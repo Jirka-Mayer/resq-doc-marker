@@ -7,6 +7,7 @@ from fastapi.security import OAuth2PasswordBearer
 from .UploadFileRequest import UploadFileRequest
 from .verify_token import verify_token
 from .store_file import store_file
+from app import __version__
 
 
 description = """
@@ -42,6 +43,11 @@ def index():
     path = os.path.join(os.path.dirname(__file__), "index.html")
     with open(path) as f:
         return f.read()
+
+
+@app.get("/version")
+def version():
+    return { "version": __version__ }
 
 
 @app.post(
