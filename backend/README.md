@@ -55,8 +55,8 @@ python3 -m venv .venv
 
 The server is launched via the `service.sh` script, make sure it is executable and try running it to test everything starts up. The service runs on port `8000`; make sure the port is not occupied while testing.
 
-```
-chmod +x service.sh
+```bash
+chmod +x service.sh  # this is tracked by git in fact, clone should suffice
 ./service.sh
 ```
 
@@ -79,8 +79,8 @@ The service is defined in the file `resq-plus-backend.service`, but it needs to 
 
 ```bash
 # create the file
-touch /etc/systemd/system/resq-plus-backend.service
-sudo chown root /etc/systemd/system/resq-plus-backend.service
+sudo touch /etc/systemd/system/resq-plus-backend.service
+sudo chmod 777 /etc/systemd/system/resq-plus-backend.service
 
 # update the file contents
 sudo cat resq-plus-backend.service > /etc/systemd/system/resq-plus-backend.service

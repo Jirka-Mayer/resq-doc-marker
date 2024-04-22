@@ -4,7 +4,7 @@ Description=RES-Q Plus Backend For File Uploading
 [Service]
 User=mayer
 WorkingDirectory=/home/mayer/backend-server/backend
-ExecStart=./service.sh
+ExecStart=/home/mayer/backend-server/backend/service.sh
 Restart=always
 
 [Install]
