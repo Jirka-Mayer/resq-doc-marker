@@ -103,3 +103,14 @@ The uploaded file contains metadata about the upload, see the fields `uploadedAt
   "resqCaseId": null
 }
 ```
+
+
+## Cleaning up the development folder
+
+To clear files from the development folder, copy the following command (to make sure you don't accidentally make a typo and delete the production ones):
+
+```bash
+rm /lnet/work/projects/resq-plus/data/raw-uploads/development/*.json
+```
+
+> **Note:** You can prepend `echo` before the command to see what is going to be executed before you actually run it.

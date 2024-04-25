@@ -2,6 +2,8 @@
 
 > This documentation file assumes you are located in the `backend` folder of the repository.
 
+> To see how you can deploy an update, see the [*Deploying an update*](#deploying-an-update) section below.
+
 The backend server for file uploading is running at `https://quest.ms.mff.cuni.cz/resq-doc-marker/backend`, which is the machine `resq-plus` behind the `quest` proxy. Everything is installed and run as the user `mayer`.
 
 This repository is cloned into `/home/mayer/backend-server` and the working directory for the server process must be `/home/mayer/backend-server/backend`.
@@ -63,4 +65,34 @@ When you apply changes to this file, you need to reload the service manager:
 
 ```
 sudo systemctl daemon-reload
+```
+
+
+## Deploying an update
+
+Commit all changes to git so that when we pull, we get the latest version to deploy. Follow these commands:
+
+```bash
+# connect to the resq-plus machine
+ssh mayer@quest.ms.mff.cuni.cz
+ssh resq-plus
+
+# enter the backend folder
+cd /home/mayer/backend-server
+
+# stop the service
+sudo systemctl stop resq-plus-backend.service
+# check that https://quest.ms.mff.cuni.cz/resq-doc-marker/backend/ is down
+
+# clone the latest code
+git pull
+
+# check the service by starting is manually
+cd backend
+./service.sh
+cd ..
+
+# start the service back up again
+sudo systemctl start resq-plus-backend.service
+# check that https://quest.ms.mff.cuni.cz/resq-doc-marker/backend/ is up
 ```
