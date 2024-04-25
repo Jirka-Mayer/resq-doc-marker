@@ -1,7 +1,7 @@
 DocMarker for RES-Q+
 ====================
 
-Try it out at: https://ufallab.ms.mff.cuni.cz/~mayer/resq-doc-marker/
+Try it out at: https://quest.ms.mff.cuni.cz/resq-doc-marker/
 
 This a RES-Q+ customization of the annotation tool [DocMarker](https://github.com/Jirka-Mayer/doc-marker).
 
