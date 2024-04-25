@@ -36,3 +36,6 @@ def store_file(file: dict, is_development: bool):
         data=json.dumps(file, ensure_ascii=False, indent=2),
         encoding="utf-8"
     )
+
+    # written by "mayer" in group "resq-plus"
+    file_path.chmod(0o660) # -rw-rw----
