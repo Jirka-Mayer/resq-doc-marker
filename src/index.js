@@ -21,7 +21,7 @@ bootstrapDocMarker({
   forms: {
     ...formDefinitions
   },
-  defaultFormId: "Official ResQ 3.1.1",
+  defaultFormId: "RES-Q 3.1.7 standard form",
   formRenderersImporter: async () => {
     const dmRenderers = await defaultOptions.formRenderersImporter()
     const resqRenderers = (await import("./formRenderersAndCells.js")).formRenderers

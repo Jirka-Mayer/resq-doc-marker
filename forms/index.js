@@ -3,6 +3,19 @@
 export default {
 
   /**
+   * RES-Q 3.1.7 standard form
+   */
+  "RES-Q 3.1.7 standard form": {
+    dataSchemaImporter: async () => await import("./RES-Q 3.1.7 standard form/schema.json"),
+    uiSchemaImporter: async () => (await import("./RES-Q 3.1.7 standard form/uischema.js")).default,
+    translationImporters: {
+      "cs": async () => await import("./RES-Q 3.1.7 standard form/dictionary_cz.json"),
+      "en-GB": async () => await import("./RES-Q 3.1.7 standard form/dictionary_en.json"),
+      // en-US falls back on en-GB
+    }
+  },
+
+  /**
    * Official ResQ 3.1.1
    */
   "Official ResQ 3.1.1": {

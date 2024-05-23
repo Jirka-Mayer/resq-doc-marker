@@ -10,6 +10,7 @@ import BodyCheckboxControl, { bodyCheckboxControlTester } from './BodyCheckboxCo
 import { MultiselectGroupContext } from "./MultiselectGroupContext"
 import _ from "lodash"
 import { useMemo } from 'react'
+import { useAtom } from "jotai"
 
 // DocMarker API imports
 import { stateApi, formApi } from "doc-marker"
@@ -74,6 +75,10 @@ export function ResqMultiselectGroup(props) {
     t,
   } = props
 
+  const [displayDebugInfo] = useAtom(
+    stateApi.userPreferencesStore.displayDebugInfoAtom
+  )
+
   const leaderUischema = uischema.elements[0]
   const leaderPath = toDataPath(leaderUischema.scope) // foo.bar.medication_any
   const leaderKey = leaderScopeToLeaderKey(leaderUischema.scope) // medication_any
@@ -81,6 +86,9 @@ export function ResqMultiselectGroup(props) {
   const leaderValue = useGetExportedValue(leaderPath)
 
   const bodyUischema = uischema.elements[1]
+
+  const leaderOptions = leaderUischema.options || {}
+  const allowNone = (leaderOptions.multiselectAllowNone === true)
   
 
   ///////////////
@@ -95,7 +103,11 @@ export function ResqMultiselectGroup(props) {
     { schema, leaderUischema, leaderPath}
   ), [t, schema, leaderUischema, leaderPath])
 
-  if (leaderValue === true && allCheckboxesAreFalse(data, groupPath, leaderKey)) {
+  if (
+    !allowNone // this allows for empty multiselect (no checkboxes checked)
+    && leaderValue === true
+    && allCheckboxesAreFalse(data, groupPath, leaderKey)
+  ) {
     errors = atLeastOneError
   }
 
@@ -107,8 +119,14 @@ export function ResqMultiselectGroup(props) {
       isGroupVisible: visible
     }}>
       <Paper sx={{
-        display: visible ? "block" : "none",
-        ml: 2, mt: 2 // the controls themselves have margin, grid does not
+        // visibility normally toggles "display: none",
+        // but if the debug mode is enabled, invisible controls are
+        // rendered, only at a 50% opacity.
+        display: (visible || displayDebugInfo) ? "block" : "none",
+        opacity: (!visible && displayDebugInfo) ? 0.5 : undefined,
+
+        // the controls themselves have margin, grid does not
+        ml: 2, mt: 2
       }}>
         <JsonFormsDispatch
           uischema={leaderUischema}
