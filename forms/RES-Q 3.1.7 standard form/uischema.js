@@ -19,6 +19,30 @@ class Resq311Mapper extends UiSchemaMapperBase {
       return undefined
     }
 
+    // split onset date-time into date and time controls
+    // (the less-painful solution, otherwise a $ref parsing would need
+    // to be added, or a custom date-time component implemented)
+    if (
+      this.isPojo
+      && element.type === "Control"
+      && element.scope === "#/properties/onset/properties/onset_date"
+    ) {
+      return new ArrayFragment([
+        {
+          // the "date" control
+          ...element,
+          options: undefined
+        },
+        {
+          // the "time" control
+          ...element,
+          scope: element.options["$ref"],
+          options: undefined,
+          i18n: "onset.onset_date" // both having the same label
+        }
+      ])
+    }
+
     // fix "Group" instead of "VerticalLayout" wrapper for
     // discharge.medication.any_treatment_prescribed
     if (
