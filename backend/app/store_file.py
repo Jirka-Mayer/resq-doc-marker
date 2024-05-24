@@ -1,5 +1,5 @@
-from .config.development import developmentConfig
-from .config.production import productionConfig
+from .config.development import development_config
+from .config.production import production_config
 from pathlib import Path
 from datetime import datetime
 import json
@@ -7,8 +7,8 @@ import json
 
 def _prepare_storage_folder(is_development: bool) -> Path:
     """Selects and optionally creates the storage folder"""
-    folder = developmentConfig.uploadedFilesStoragePath \
-        if is_development else productionConfig.uploadedFilesStoragePath
+    folder = development_config.uploaded_files_storage_path \
+        if is_development else production_config.uploaded_files_storage_path
     
     if not folder.exists():
         folder.mkdir(parents=True)

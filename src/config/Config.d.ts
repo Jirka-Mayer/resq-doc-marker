@@ -22,7 +22,7 @@ export interface Config {
 
   /**
    * Name of the doc-marker OAuth2 client,
-   * set to the RES-Q "login" page as a parameter,
+   * sent to the RES-Q "login" page as a parameter,
    * needs to be white-listed in the keycloak configuration
    */
   oauthClientId: string,

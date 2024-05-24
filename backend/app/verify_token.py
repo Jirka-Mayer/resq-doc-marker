@@ -1,16 +1,17 @@
-from .config.development import developmentConfig
-from .config.production import productionConfig
+from .config.development import development_config
+from .config.production import production_config
 import requests
 
 
+# TODO: deprecated
 def verify_token(token: str, is_development: bool) -> bool:
     """
     Queries the /myself RES-Q registry endpoint with the token
     and checks that it gets a 200 response. If the token is valid,
     it returns true.
     """
-    url = developmentConfig.resqApiBaseUrl if is_development \
-        else productionConfig.resqApiBaseUrl
+    url = development_config.resq_api_base_url if is_development \
+        else production_config.resq_api_base_url
 
     response = requests.get(
         url,
