@@ -216,7 +216,18 @@ export function UploadDialog() {
                 are you sure you want to upload it again? You can upload
                 it again if you made changes to the file and you want to
                 propagate these changes to the RES-Q registry
-                and the Charles University.
+                and the Charles University.<br />
+                {caseId && (<>
+                  <br />
+                  Case ID in the RES-Q registry:<br />
+                  <strong>{caseId}</strong><br/>
+                  <br/>
+                  <a
+                    style={{ color: "inherit" }}
+                    href={config.resqRecordUrl(recordId)}
+                    target="_blank"
+                  >{ config.resqRecordUrl(recordId) }</a>
+                </>)}
               </Alert>
             )}
 
