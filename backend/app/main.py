@@ -1,20 +1,26 @@
 import os
 from typing import Annotated
-from fastapi import FastAPI, Header, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2PasswordBearer
-from .UploadFileRequest import UploadFileRequest
-from .verify_token import verify_token
-from .store_file import store_file
-from .uploading.UploadTransaction import UploadTransaction
+from .uploading.store_file_at_ufal import store_file_at_ufal
 from .uploading.UploadTransactionRepository import UploadTransactionRepository
-from .uploading.exchange_authorization_code_for_resq_token \
+from .uploading.resq.exchange_authorization_code_for_resq_token \
     import exchange_authorization_code_for_resq_token
-from .uploading.populate_transaction_with_user_data \
+from .uploading.resq.populate_transaction_with_user_data \
     import populate_transaction_with_user_data
+from .uploading.resq.create_new_resq_case import create_new_resq_case
+from .uploading.resq.create_resq_record_for_case \
+    import create_resq_record_for_case
+from .uploading.resq.fetch_resq_case import fetch_resq_case
+from .uploading.resq.update_resq_record_for_case \
+    import update_resq_record_for_case
+from .uploading.DocMarkerFile import DocMarkerFile
 from .InitiateUploadRequest import InitiateUploadRequest
 from .InitiateUploadResponse import InitiateUploadResponse
+from .FinalizeUploadRequest import FinalizeUploadRequest
+from .FinalizeUploadResponse import FinalizeUploadResponse
 from app import __version__
 
 
@@ -94,6 +100,7 @@ def initiate_upload_transaction(
     
     # create a new transaction
     transaction = upload_transaction_repository.create(
+        is_development=request.is_development,
         authorization_code=request.authorization_code,
         resq_access_token=resq_access_token
     )
@@ -111,26 +118,103 @@ def initiate_upload_transaction(
     return InitiateUploadResponse.from_transaction(transaction)
 
 
-# TODO: PATCH /upload-transaction/:id
-
-
-# TODO: deprecated
-@app.post(
-    "/uploaded-file",
-    status_code=201,
+@app.patch(
+    "/upload-transaction/{transaction_id}",
+    status_code=200,
     responses={
         401: {
-            "description": "Given access token is invalid"
+            "description": "Given DocMakrer token is invalid"
+        },
+        404: {
+            "description": "Given upload transaction ID does not exist"
+        },
+        422: {
+            "description": "Invalid request format"
         }
     }
 )
-def upload_file(
+def finalize_upload_transaction(
     token: Annotated[str, Depends(oauth2_scheme)],
-    request: UploadFileRequest
-):
-    if not verify_token(token, request.is_development):
-        raise HTTPException(status_code=401, detail="Invalid bearer token")
-
-    store_file(request.file_json, request.is_development)
+    transaction_id: int,
+    request: FinalizeUploadRequest
+) -> FinalizeUploadResponse:
+    # fetch the upload transaction
+    transaction = upload_transaction_repository.find(transaction_id)
+    if transaction is None:
+        raise HTTPException(status_code=404, detail="Transaction not found")
     
-    return {"message": "File was uploaded successfully."}
+    # verify the DocMarker token
+    if token != transaction.doc_marker_token:
+        raise HTTPException(status_code=401, detail="Invalid bearer token")
+    
+    # verify chosen provider ID
+    if request.resq_provider_id not in transaction.resq_providers:
+        raise HTTPException(status_code=422, detail="Invalid RES-Q provider ID")
+
+    # wrap the DocMarker file to allow manipulations
+    dm_file = DocMarkerFile(request.file_json)
+    
+    # keep track of important IDs
+    case_id = dm_file.get_case_id()
+    record_id = dm_file.get_record_id()
+    
+    # first, upload to resq to set the case ID
+    if request.upload_to_resq:
+        if case_id is None:
+            # create a fresh new case and record
+            case_id = create_new_resq_case(
+                transaction.resq_access_token,
+                transaction.is_development,
+                request.resq_provider_id
+            )
+            record_id = create_resq_record_for_case(
+                transaction.resq_access_token,
+                transaction.is_development,
+                case_id,
+                request.resq_form_localization_id,
+                dm_file.get_form_data()
+            )
+        else:
+            # update an existing case and record
+            resq_case = fetch_resq_case(
+                transaction.resq_access_token,
+                transaction.is_development,
+                case_id
+            )
+            if resq_case is None:
+                raise HTTPException(
+                    status_code=429,
+                    detail="Cannot access the linked RES-Q case"
+                )
+            
+            resq_record = resq_case.find_record(record_id)
+            if resq_record is None:
+                raise HTTPException(
+                    status_code=429,
+                    detail="Cannot find the linked RES-Q record"
+                )
+
+            update_resq_record_for_case(
+                transaction.resq_access_token,
+                transaction.is_development,
+                resq_record,
+                dm_file.get_form_data()
+            )
+
+    # update upload-related metadata
+    dm_file.set_case_id(case_id)
+    dm_file.set_record_id(record_id)
+    dm_file.set_resq_user_metadata(
+        request.resq_provider_id,
+        transaction
+    )
+    dm_file.set_uploaded_at_to_now()
+
+    # store the file at ufal
+    if request.upload_to_ufal:
+        store_file_at_ufal(dm_file.json, transaction.is_development)
+
+    # send the updated file back as part of the response
+    return FinalizeUploadResponse(
+        file_json=dm_file.json
+    )

@@ -1,5 +1,5 @@
-from .config.development import development_config
-from .config.production import production_config
+from ..config.development import development_config
+from ..config.production import production_config
 from pathlib import Path
 from datetime import datetime
 import json
@@ -19,7 +19,7 @@ def _prepare_storage_folder(is_development: bool) -> Path:
     return folder
 
 
-def store_file(file: dict, is_development: bool):
+def store_file_at_ufal(file: dict, is_development: bool):
     """Stores an uploaded report file"""
     folder_path = _prepare_storage_folder(is_development)
 

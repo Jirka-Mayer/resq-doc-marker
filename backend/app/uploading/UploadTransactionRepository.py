@@ -18,12 +18,14 @@ class UploadTransactionRepository:
     
     def create(
         self,
+        is_development: bool,
         authorization_code: str,
         resq_access_token: str
     ) -> UploadTransaction:
         """Creates a new transaction instance, but does not store it yet"""
         transaction = UploadTransaction(
             id=self._next_id,
+            is_development=is_development,
             created_at=datetime.now(),
             doc_marker_token=uuid.uuid4().hex,
             authorization_code=authorization_code,

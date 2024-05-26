@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Dict, Optional
 from datetime import datetime
+from .resq.ResqUser import ResqUser
 
 
 @dataclass
@@ -9,6 +10,9 @@ class UploadTransaction:
     
     id: int
     "ID of the upload transaction"
+
+    is_development: bool
+    "Is the transaction run against the RES-Q development or production server"
 
     created_at: datetime
     "When was the transaction created"
@@ -24,5 +28,8 @@ class UploadTransaction:
     resq_access_token: str
     "Access token used to access the RES-Q API"
 
-    resq_user: Optional[dict]
-    "JSON describing the RES-Q user directly from the RES-Q API"
+    resq_user: Optional[ResqUser]
+    "RES-Q user that initiated this upload transaction"
+
+    resq_providers: Dict[int, str]
+    "Map from provider IDs (hospitals) to their display names"

@@ -1,6 +1,6 @@
 import urllib.parse
-from ..config.development import development_config
-from ..config.production import production_config
+from ...config.development import development_config
+from ...config.production import production_config
 from typing import Optional
 import requests
 import urllib
