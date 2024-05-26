@@ -12,6 +12,17 @@ export default {
       "cs": async () => await import("./RES-Q 3.1.7 standard form/dictionary_cz.json"),
       "en-GB": async () => await import("./RES-Q 3.1.7 standard form/dictionary_en.json"),
       // en-US falls back on en-GB
+    },
+    resqFormLocalizationIds: {
+      development: {
+        "en-GB": 20,
+        "cs": 21
+      },
+      production: {
+        // TODO: add production IDs for forms
+        // "en-GB": ???, // acts as fallback for all others that are missing
+        // "cs": ???
+      }
     }
   },
 

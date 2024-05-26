@@ -8,7 +8,7 @@
  */
 
 import { atom, getDefaultStore } from "jotai";
-import { ResqUser } from "../resq-model/ResqUser";
+import { UploaderUserMetadata } from "./UploaderUserMetadata";
 
 // lets us manipulate atoms from the non-jotai/react code
 const jotaiStore = getDefaultStore();
@@ -19,9 +19,9 @@ const jotaiStore = getDefaultStore();
 export const uploadedAtAtom = atom<Date | null>(null);
 
 /**
- * Holds the RES-Q user that has uploaded this file
+ * Holds metadata about the RES-Q user that has uploaded this file
  */
-export const uploadedByUserAtom = atom<ResqUser | null>(null);
+export const uploadedByUserAtom = atom<UploaderUserMetadata | null>(null);
 
 /**
  * Holds the RES-Q case ID that was created when the file
@@ -33,12 +33,19 @@ export const uploadedByUserAtom = atom<ResqUser | null>(null);
 export const resqCaseIdAtom = atom<string | null>(null);
 
 /**
+ * Holds the RES-Q record ID. A record is a sub-entity under a case.
+ * In our setup, there should only be a single record for each case.
+ */
+export const resqRecordIdAtom = atom<number | null>(null);
+
+/**
  * Called during the creation of an empty AppFile
  */
 export function createEmptyFileJson(json: object) {
   json["uploadedAt"] = null;
   json["uploadedByUser"] = null;
   json["resqCaseId"] = null;
+  json["resqRecordId"] = null;
 }
 
 /**
@@ -52,6 +59,7 @@ export function deserializeFromFileJson(json: object) {
   jotaiStore.set(uploadedAtAtom, uploadedAt);
   jotaiStore.set(uploadedByUserAtom, json["uploadedByUser"] || null);
   jotaiStore.set(resqCaseIdAtom, json["resqCaseId"] || null);
+  jotaiStore.set(resqRecordIdAtom, json["resqRecordId"] || null);
 }
 
 /**
@@ -61,4 +69,5 @@ export function serializeToFileJson(json: object) {
   json["uploadedAt"] = jotaiStore.get(uploadedAtAtom)?.toISOString() || null;
   json["uploadedByUser"] = jotaiStore.get(uploadedByUserAtom);
   json["resqCaseId"] = jotaiStore.get(resqCaseIdAtom);
+  json["resqRecordId"] = jotaiStore.get(resqRecordIdAtom);
 }

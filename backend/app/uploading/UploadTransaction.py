@@ -31,5 +31,5 @@ class UploadTransaction:
     resq_user: Optional[ResqUser]
     "RES-Q user that initiated this upload transaction"
 
-    resq_providers: Dict[int, str]
+    resq_providers: Optional[Dict[int, str]]
     "Map from provider IDs (hospitals) to their display names"

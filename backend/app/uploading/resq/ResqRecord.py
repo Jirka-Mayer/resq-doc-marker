@@ -14,3 +14,6 @@ class ResqRecord:
 
     latest_entry_id: int
     "ID of the latest entry for this record"
+
+    submitted: bool
+    "Was the record already submitted?"

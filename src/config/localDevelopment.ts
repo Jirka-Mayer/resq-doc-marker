@@ -3,8 +3,8 @@ import development from "./development";
 
 const config: Config = {
   ...development,
-  ufalUploadUrl: "http://localhost:8000/uploaded-file",
-  ufalUploadIsDevelopment: true,
+  uploadServerBaseUrl: "http://localhost:8000/",
+  uploadServerActInDevelopment: true,
 };
 
 export default config;

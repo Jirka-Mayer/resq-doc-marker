@@ -1,10 +1,10 @@
 import copy
 from typing import Optional
 from .UploadTransaction import UploadTransaction
-from datetime import datetime
+import datetime
 
 
-FORM_DATA_KEY = "formData"
+FORM_DATA_KEY = "_formData"
 CASE_ID_KEY = "resqCaseId"
 RECORD_ID_KEY = "resqRecordId"
 UPLOADED_BY_USER_KEY = "uploadedByUser"
@@ -54,4 +54,6 @@ class DocMarkerFile:
         }
     
     def set_uploaded_at_to_now(self):
-        self.json[UPLOADED_AT_KEY] = datetime.now().isoformat()
+        self.json[UPLOADED_AT_KEY] = datetime.datetime \
+            .now(datetime.timezone.utc) \
+            .strftime("%Y-%m-%dT%H:%M:%S.%fZ")

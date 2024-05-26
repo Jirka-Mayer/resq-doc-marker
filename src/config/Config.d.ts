@@ -1,24 +1,15 @@
+export type UrlMapper = (id: any) => string;
+
 export interface Config {
   /**
    * Base URL for the RES-Q registry API
    */
   resqApiBaseUrl: string,
 
-
-  ////////////////////
-  // Authentication //
-  ////////////////////
-
   /**
    * The "login" page of the keycloak server where we redict the user to
    */
   keycloakAuthUrl: string,
-
-  /**
-   * The endpoint for exchanging an authorization code for the access token
-   * (the OAuth2 *token endpoint*)
-   */
-  keycloakTokenUrl: string,
 
   /**
    * Name of the doc-marker OAuth2 client,
@@ -28,14 +19,18 @@ export interface Config {
   oauthClientId: string,
 
   /**
-   * URL where a finished file should be uploaded to,
-   * in order to upload it to the Charles University
+   * Base URL of the upload server that runs at ÚFAL
    */
-  ufalUploadUrl: string,
+  uploadServerBaseUrl: string,
 
   /**
-   * Should the Charles University upload be a development,
-   * or a production upload?
+   * Should we present ourselves to the upload server as a development
+   * client or as a production client?
    */
-  ufalUploadIsDevelopment: boolean,
+  uploadServerActInDevelopment: boolean,
+
+  /**
+   * Lambda that maps record ID to its URL
+   */
+  resqRecordUrl: UrlMapper,
 }

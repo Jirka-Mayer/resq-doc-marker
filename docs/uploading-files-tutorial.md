@@ -87,20 +87,17 @@ The uploaded file contains metadata about the upload, see the fields `uploadedAt
   },
   "_reportText": "\n",
   "_highlights": {},
-  "uploadedAt": "2024-04-25T08:50:33.207Z",
+  "uploadedAt": "2024-05-26T22:31:24.052954Z",
   "uploadedByUser": {
     "id": "3bbf673a-a0d4-4492-96d0-3dc376e29cfe",
     "firstName": "Jiří",
     "lastName": "Mayer",
     "title": "",
-    "settings": {
-      "currentProvider": {
-        "id": 265,
-        "name": "Institute of Formal and Applied Linguistics, Charles University"
-      }
-    }
+    "providerId": 265,
+    "providerName": "Ústav formální a aplikované lingvistiky, Karlova Univerzita"
   },
-  "resqCaseId": null
+  "resqCaseId": "abd74ecf-8994-4ed9-a0b0-179e217f9d11",
+  "resqRecordId": 224
 }
 ```
 

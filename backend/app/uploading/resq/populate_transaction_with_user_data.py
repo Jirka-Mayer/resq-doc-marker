@@ -55,4 +55,4 @@ def populate_transaction_with_user_data(
         if assignment["role"] not in ["dataEntry", "localCoordinator"]:
             continue
         provider = assignment["provider"]
-        transaction.resq_providers[provider["id"]] = provider["name"]
+        transaction.resq_providers[provider["id"]] = provider["nameNative"]

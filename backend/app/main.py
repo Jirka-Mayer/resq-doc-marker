@@ -183,15 +183,23 @@ def finalize_upload_transaction(
             )
             if resq_case is None:
                 raise HTTPException(
-                    status_code=429,
+                    status_code=422,
                     detail="Cannot access the linked RES-Q case"
                 )
             
             resq_record = resq_case.find_record(record_id)
             if resq_record is None:
                 raise HTTPException(
-                    status_code=429,
+                    status_code=422,
                     detail="Cannot find the linked RES-Q record"
+                )
+            
+            if resq_record.submitted:
+                raise HTTPException(
+                    status_code=422,
+                    detail="The RES-Q record has been submitted and so its " +
+                    "overwriting is disabled. You need to set it back to a " +
+                    "draft in RES-Q in order for the upload to work again."
                 )
 
             update_resq_record_for_case(

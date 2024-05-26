@@ -39,7 +39,8 @@ def fetch_resq_case(
             id=int(record_data["id"]),
             state=str(record_data["state"]),
             localization=int(record_data["localization"]),
-            latest_entry_id=int(record_data["latest_entry"]["id"])
+            latest_entry_id=int(record_data["latestEntry"]["id"]),
+            submitted=bool(record_data["latestEntry"]["submitted"])
         )
         resq_case.records.append(resq_record)
 

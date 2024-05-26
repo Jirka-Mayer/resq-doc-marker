@@ -7,6 +7,8 @@ import {
   DialogContent,
   DialogTitle,
   Select,
+  InputLabel,
+  FormControl,
   FormControlLabel,
   MenuItem,
   CircularProgress,
@@ -26,17 +28,18 @@ import {
   fileUuid,
   useDummyConnection,
 } from "./pageLoadingIntercept";
-import { ResqApiConnection } from "./ResqApiConnection";
+import { UploadServerConnection } from "./UploadServerConnection";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { stateApi } from "doc-marker";
-import { ResqUser } from "../resq-model/ResqUser";
+import { ResqUser } from "./ResqUser";
+import config from "../config";
 import { DummyConnection } from "./DummyConnection";
-import { uploadFileToUfal } from "./uploadFileToUfal";
+import { getResqFormLocalizationId } from "./getResqFormLocalizationId";
 
 export const isOpenAtom = atom(openUploadDialog);
 
 export function UploadDialog() {
-  const { t } = useTranslation("uploadDialog");
+  const { t, i18n } = useTranslation("uploadDialog");
 
   const [isOpen, setIsOpen] = useAtom<boolean>(isOpenAtom);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -47,16 +50,19 @@ export function UploadDialog() {
     useState<boolean>(false);
 
   const [authError, setAuthError] = useState<string | null>(null);
-  const connectionRef = useRef<ResqApiConnection | null>(null);
+  const connectionRef = useRef<UploadServerConnection | null>(null);
   const [user, setUser] = useState<ResqUser | null>(null);
+  const [providers, setProviders] = useState<{[id: number]: string}>({});
+  const [selectedProvider, setSelectedProvider] = useState<number | null>(null);
 
-  const [uploadToResq, setUploadToResq] = useState<boolean>(false);
+  const [uploadToResq, setUploadToResq] = useState<boolean>(true);
   const [uploadToUfal, setUploadToUfal] = useState<boolean>(true);
 
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadDone, setUploadDone] = useState<boolean>(false);
   const [caseId, setCaseId] = useState<string | null>(null);
+  const [recordId, setRecordId] = useState<string | null>(null);
 
   async function handleDialogOpenning() {
     if (authorizationCode === null) {
@@ -70,11 +76,14 @@ export function UploadDialog() {
     setAuthError(null);
     connectionRef.current = null;
     setUser(null);
+    setProviders({});
+    setSelectedProvider(null);
     setUploadDone(false);
     setIsUploading(false);
     setUploadError(null);
     setFileAlreadyUploaded(false);
     setCaseId(null);
+    setRecordId(null);
 
     // load the file
     const file = stateApi.FileStorage.loadFile(fileUuid);
@@ -86,18 +95,18 @@ export function UploadDialog() {
     setFileName(file.constructFileName());
     setFileAlreadyUploaded(typeof(file.body["uploadedAt"]) === "string");
     setCaseId(file.body["resqCaseId"] || null);
+    setRecordId(file.body["resqRecordId"] || null);
 
     try {
       // setup API connection
       const _connection = useDummyConnection
         ? new DummyConnection() // add &dummy=true to the URL to use this
-        : await ResqApiConnection.connect(authorizationCode);
+        : await UploadServerConnection.connect(authorizationCode);
 
-      // fetch user info
-      const _user = await _connection.getAuthenticatedUser();
-      
       connectionRef.current = _connection;
-      setUser(_user);
+      setUser(_connection.resqUser);
+      setProviders(_connection.resqProviders);
+      setSelectedProvider(_connection.resqUser.current_provider_id)
     } catch (e) {
       const err = e as Error;
       setAuthError(err.stack || (err.name + ": " + err.message));
@@ -113,12 +122,20 @@ export function UploadDialog() {
   }, [isOpen]);
 
   async function performUploading() {
+    // must upload to at least one destination
     if (!uploadToResq && !uploadToUfal) {
       // TODO: translate
       alert(
         "Uploading to neither RES-Q, nor the Charles University. " +
         "Check at least one of the two boxes."
       );
+      return;
+    }
+
+    // when uploading to RES-Q, a provider must be selected
+    if (uploadToResq && selectedProvider === null) {
+      // TODO: translate
+      alert("Select a provider");
       return;
     }
 
@@ -134,67 +151,30 @@ export function UploadDialog() {
     }
 
     try {
-      let _caseId = caseId;
+      const modifiedFileJson = await _connection.finalizeUploadTransaction(
+        fileRef.current.toJson(),
+        uploadToUfal,
+        uploadToResq,
+        selectedProvider,
+        getResqFormLocalizationId(
+          fileRef.current.body["_formId"],
+          i18n.language
+        ),
+      );
 
-      // first, upload to resq to get most-recent resq metadata to the file
-      if (uploadToResq) {
-        _caseId = await _connection.uploadFileToRegistry(
-          _caseId
-        );
-      }
+      // store the modified file JSON
+      fileRef.current = new stateApi.AppFile(modifiedFileJson);
+      stateApi.FileStorage.storeFile(fileRef.current);
 
-      // store this metadata in the file
-      rememberFileUpload(_caseId);
-
-      // now send the file to the Charles University
-      if (uploadToUfal) {
-        await uploadFileToUfal(
-          fileRef.current.toJson(),
-          _connection.accessToken
-        )
-      }
-
-      setCaseId(_caseId);
+      // update UI
+      setCaseId(fileRef.current.body["resqCaseId"] || null);
+      setRecordId(fileRef.current.body["resqRecordId"] || null);
       setUploadDone(true);
     } catch (e) {
       const err = e as Error;
       setUploadError(err.stack || (err.name + ": " + err.message));
     }
     setIsUploading(false);
-  }
-
-  /**
-   * Called when the file upload succeeds,
-   * stores the upload metadata in the file and saves the file
-   */
-  function rememberFileUpload(resqCaseId: string | null) {
-    const file = fileRef.current;
-    
-    file.body["uploadedAt"] = new Date().toISOString();
-    
-    if (user !== null) {
-      // keep only those fields that we care about and filter out
-      // things such as phone number, email address, date of registration, etc.
-      const prunedUser: ResqUser = {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        title: user.title,
-        settings: {
-          currentProvider: {
-            id: user.settings.currentProvider.id,
-            name: user.settings.currentProvider.name,
-          }
-        },
-      }
-      file.body["uploadedByUser"] = prunedUser;
-    } else {
-      file.body["uploadedByUser"] = null;
-    }
-
-    file.body["resqCaseId"] = resqCaseId;
-    
-    stateApi.FileStorage.storeFile(file);
   }
 
   return (
@@ -235,16 +215,18 @@ export function UploadDialog() {
                 This file has already been uploaded,
                 are you sure you want to upload it again? You can upload
                 it again if you made changes to the file and you want to
-                propagate these changes to the RES-Q registry and Charles University.
+                propagate these changes to the RES-Q registry
+                and the Charles University.
               </Alert>
             )}
 
             <Alert severity="info" sx={{mb: 2}}>
               You are logged in as:<br/>
               <strong>
-                {user.title} {user.firstName} {user.lastName}
+                {user.title} {user.first_name} {user.last_name}
               </strong><br />
-              {user?.settings.currentProvider.name}
+              And you are uploading the file:<br/>
+              <strong>{ fileName }</strong>
             </Alert>
 
             <Typography variant="body1" color="text.primary" gutterBottom>
@@ -252,20 +234,9 @@ export function UploadDialog() {
               file to the RES-Q registry and Charles University.
             </Typography>
 
-            <Typography variant="subtitle2" color="text.primary">
-              File:
-            </Typography>
-            <Typography variant="body1" color="text.primary">
-              { fileName }
-            </Typography>
-            <Typography variant="body2" color="text.primary" gutterBottom>
-              ({ fileUuid })
-            </Typography>
-
             <FormGroup>
               <FormControlLabel
                 sx={{ alignItems: "flex-start" }}
-                disabled={true} // RES-Q upload is not implemented yet!
                 control={
                   <Checkbox
                     sx={{ marginTop: -1 }}
@@ -280,8 +251,35 @@ export function UploadDialog() {
                     gutterBottom: true,
                   },
                 }}
-                label="Upload file to the RES-Q registry (to be added...)"
+                label="Upload file to the RES-Q registry"
               />
+              <FormControl
+                size="small"
+                sx={{
+                  ml: 4,
+                  mb: 2,
+                  display: uploadToResq ? undefined : "none"
+                }}
+              >
+                <InputLabel id="resq-provider-select-label">Provider</InputLabel>
+                <Select
+                  labelId="resq-provider-select-label"
+                  id="resq-provider-select"
+                  value={String(selectedProvider)}
+                  label="Provider"
+                  onChange={e => setSelectedProvider(
+                    e.target.value === "null" ? null : Number(e.target.value)
+                  )}
+                  disabled={!uploadToResq}
+                >
+                  <MenuItem value="null">
+                    <em>Select a provider</em>
+                  </MenuItem>
+                  {Object.keys(providers).map(pi => (
+                    <MenuItem key={pi} value={String(pi)}>{providers[pi]}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               <FormControlLabel
                 sx={{ alignItems: "flex-start" }}
                 control={
@@ -298,7 +296,7 @@ export function UploadDialog() {
                     gutterBottom: true,
                   },
                 }}
-                label="Upload file to Charles University"
+                label="Upload file to the Charles University"
               />
             </FormGroup>
 
@@ -329,11 +327,20 @@ export function UploadDialog() {
             <Alert severity="success" sx={{mb: 2}}>
               Thank you for uploading the file. If you make any
               changes to the file, you can upload it again and it will be
-              updated.<br />
+              updated. If you've uploaded to RES-Q, make sure to open the
+              case there and submit it.<br />
               <br />
               Case ID in the RES-Q registry:<br />
               {caseId ? (
-                <strong>To be added...</strong>
+                <>
+                  <strong>{caseId}</strong><br/>
+                  <br/>
+                  <a
+                    style={{ color: "inherit" }}
+                    href={config.resqRecordUrl(recordId)}
+                    target="_blank"
+                  >{ config.resqRecordUrl(recordId) }</a>
+                </>
               ) : (
                 <em>The file was not yet uploaded to the RES-Q registry.</em>
               )}

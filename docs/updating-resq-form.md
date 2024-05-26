@@ -2,7 +2,7 @@
 
 First, you need to get the name and the data and form schema files. This can be done via the RES-Q API. The `GET /forms` endpoint lists all form types, of which we care only about the `RES-Q Stroke Form`, but we want a specific version of this form, which can be queried via `GET /form-versions`. This returns all forms in all version, but we can filter down only to the stroke form.
 
-> I queried this information via https://editor.swagger.io/ with API specification yaml file from RES-Q developers and with the development bearer access token copied form development DocMarker when doing a file upload (via browser developer tools).
+> I queried this information via https://editor.swagger.io/ with API specification yaml file from RES-Q developers and with the development bearer access token copied form development ResQ, when being logged in and inspecting the `session` endpoint that is being pinged.
 
 In my case the `form-version` I care about is this one:
 
@@ -49,7 +49,7 @@ The `dictionary` field contains the translations. Copy that to a `dictionary_en.
 
 ## Registering the form
 
-In `/forms/index.js` I need to add a record for the form, similar to the other records there.
+In `/forms/index.js` I need to add a record for the form, similar to the other records there. You also need to set the proper `formLocalizationIds` values so that exports to RES-Q work. These are IDs of specific form version and localizations in RES-Q and the IDs can be obtained from the `GET /form-localizations` endpoint as shown in the previous section. In our case, the english localization has the ID `20`. And english is also the fallback if the current language of DocMarker cannot be found in the lookup dictionary.
 
 
 ## Setting the form as default

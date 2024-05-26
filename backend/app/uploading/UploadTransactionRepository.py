@@ -30,7 +30,8 @@ class UploadTransactionRepository:
             doc_marker_token=uuid.uuid4().hex,
             authorization_code=authorization_code,
             resq_access_token=resq_access_token,
-            resq_user=None
+            resq_user=None,
+            resq_providers=None
         )
         
         self._next_id += 1

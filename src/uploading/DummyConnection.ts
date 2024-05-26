@@ -1,25 +1,47 @@
-import { ResqApiConnection } from "./ResqApiConnection";
-import { ResqUser } from "../resq-model/ResqUser";
+import { UploadServerConnection } from "./UploadServerConnection";
+import { ResqUser } from "./ResqUser";
 
-export class DummyConnection extends ResqApiConnection {
+export class DummyConnection extends UploadServerConnection {
   constructor() {
-    super("dummy-token");
-  }
-
-  public async getAuthenticatedUser(): Promise<ResqUser> {
-    return {
+    const user: ResqUser = {
       id: "dummy-resq-user-id-john-doe",
 
-      firstName: "John",
-      lastName: "Doe",
+      first_name: "John",
+      last_name: "Doe",
       title: "",
 
-      settings: {
-        currentProvider: {
-          id: 420,
-          name: "Johns Hospital"
-        }
-      },
+      current_provider_id: 420
     };
+
+    super(
+      42,
+      "dummy-doc-marker-token",
+      user,
+      {
+        420: "Johns Hospital",
+        123: "Another Dummy Hospital"
+      }
+    );
+  }
+
+  public async finalizeUploadTransaction(
+    fileJson: object,
+    uploadToUfal: boolean,
+    uploadToResq: boolean,
+    resqProviderId: number | null,
+    resqFormLocalizationId: number | null
+  ): Promise<object | null> {
+    // just log the data
+    console.log("finalizeUploadTransaction:", arguments);
+    
+    const modifiedJson = JSON.parse(JSON.stringify(fileJson));
+    modifiedJson["uploadedAt"] = new Date().toISOString();
+    modifiedJson["uploadedByUser"] = {
+      "//": "dummy-user-metadata"
+    };
+    modifiedJson["resqCaseId"] = "dummyCaseId";
+    modifiedJson["resqRecordId"] = "dummyRecordId";
+
+    return modifiedJson;
   }
 }
