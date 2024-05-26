@@ -38,20 +38,5 @@ export default {
       // en-US falls back on en-GB
     }
   },
-  
-  /**
-   * ResQPlus Alpha 1.0
-   */
-  "ResQPlus Alpha 1.0": {
-    dataSchemaImporter: async () =>
-      (await import("./ResQPlus Alpha 1.0/data-schema.js")).default,
-    uiSchemaImporter: async () =>
-      (await import("./ResQPlus Alpha 1.0/ui-schema.js")).default,
-    translationImporters: {
-      "cs": async () => await import("./ResQPlus Alpha 1.0/translations/cs.json"),
-      "en-GB": async () => await import("./ResQPlus Alpha 1.0/translations/en-GB.json"),
-      // en-US falls back on en-GB
-    }
-  },
 
 }
