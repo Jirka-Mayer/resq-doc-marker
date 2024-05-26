@@ -4,6 +4,7 @@ uvicorn[standard] >= 0.22.0
 
 # Dependencies
 requests
+python-dotenv
 
 # Development utils
 pytest >= 7.3.2

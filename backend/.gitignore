@@ -1,5 +1,6 @@
 # stored report files
 /storage/
+/.env
 
 # python and flask ignores taken from flask documentation
 .venv/
