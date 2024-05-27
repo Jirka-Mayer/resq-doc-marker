@@ -23,13 +23,13 @@ Now, in the top menu, click `Tools > Upload file to RES-Q`. You will be redirect
 
 After logging in, you will be redirected back to DocMarker. Now you should see a dialog window, showing metadata about yourself and the file you want to upload:
 
-![Upload dialog screenshot](upload-dialog-screenshot.png)
+<img alt="Upload dialog screenshot" src="upload-dialog-screenshot.png" width="500"/>
 
 You can click the `Upload` button and the necessary actions will be performed.
 
 When the upload finishes, you will be shown a green success box with assigned *Case ID* from the RES-Q registry. This case ID will be stored in the DocMarker file so that any future uploads will modify the data for this RES-Q case, instead of creating a new one.
 
-![Upload dialog success screenshot](upload-dialog-success-screenshot.png)
+<img alt="Upload dialog success screenshot" src="upload-dialog-success-screenshot.png" width="500"/>
 
 Clicking the link at the bottom of the green box will open the created RES-Q case in a new tab. There you can verify the uploaded data and submit the case.
 
@@ -46,7 +46,7 @@ If you make changes to the DocMarker file and upload again, the corresponding RE
 
 Uploading an already uploaded file provides a warning and the link to the case before the upload is finalized:
 
-![Reupload dialog warning screenshot](reupload-dialog-warning-screenshot.png)
+<img alt="Reupload dialog warning screenshot" src="reupload-dialog-warning-screenshot.png" width="500"/>
 
 
 
