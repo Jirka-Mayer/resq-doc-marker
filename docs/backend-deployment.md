@@ -28,6 +28,8 @@ python3 -m venv .venv
 .venv/bin/pip3 install -r requirements.txt
 ```
 
+The configuration is customized by a `.env` file inside the working directory `/home/mayer/backend-server/backend`. To reload this file the service must be restarted.
+
 The server is launched via the `service.sh` script, make sure it is executable and try running it to test everything starts up. The service runs on port `8000`; make sure the port is not occupied while testing.
 
 ```bash
@@ -86,6 +88,9 @@ sudo systemctl stop resq-plus-backend.service
 
 # clone the latest code
 git pull
+
+# update any configuration
+nano backend/.env
 
 # check the service by starting is manually
 cd backend
