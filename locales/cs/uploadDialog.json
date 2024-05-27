@@ -1,4 +1,30 @@
 {
   "title": "Nahrání formuláře do registru",
-  "cancel": "Zrušit"
+
+  "alertNoCheckbox": "Není vybrané nahrávání ani do RES-Q, ani na Univerzitu Karlovu. Zaškrtněte alespoň jeden z boxů.",
+  "alertNoProvider": "Vyberte poskytovatele, pro kterého má proběhnout nahrání.",
+  
+  "authFailedMessage": "Nezdařila se autentizace. Zkuste soubor nahrát znovu.",
+  "alreadyUploadedWarning": "Tento soubor již byl dříve nahrán, opravdu ho chcete nahrát znovu? Opětovné nahrání lze provést pokud jste v souboru provedli změny a chtěli byste je propagovat do RES-Q a na Univerzitu Karlovu.",
+  
+  "caseIdInRegistry": "Case ID v RES-Q registru:",
+  
+  "loggedInAs": "Jste přihlášeni jako uživatel:",
+  "uploadingTheFile": "A nahráváte soubor:",
+
+  "instructions": "Kliknutím na tlačítko nahrání nahrajete vyplněný soubor do RES-Q registru a na Univerzitu Karlovu.",
+  "resqCheckbox": "Nahrát soubor do registru RES-Q",
+  "providerLabel": "Poskytovatel",
+  "providerEmpty": "Vybrat poskytovatele",
+  "ufalCheckbox": "Nahrát soubor na Univerzitu Karlovu",
+  
+  "uploadingSpinner": "Nahrávání...",
+
+  "uploadingFailedMessage": "Nahrávání se nezdařilo. Zkuste soubor nahrát znovu.",
+  "uploadingDoneMessage": "Děkujeme za nahrání souboru. Pokud v souboru provedete změny, můžete ho nahrát znovu a změny se pak promítnou i v registru. Pokud jste soubor nahráli do RES-Q registru, otevřte vzniklý záznam ještě tam a potvrďte jeho odeslání.",
+  "uploadingDoneNoCaseId": "Soubor ještě nebyl nahrán do RES-Q registru.",
+
+  "close": "Zavřít",
+  "cancel": "Zrušit",
+  "upload": "Nahrát"
 }

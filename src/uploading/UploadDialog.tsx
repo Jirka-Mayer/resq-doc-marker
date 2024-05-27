@@ -124,18 +124,13 @@ export function UploadDialog() {
   async function performUploading() {
     // must upload to at least one destination
     if (!uploadToResq && !uploadToUfal) {
-      // TODO: translate
-      alert(
-        "Uploading to neither RES-Q, nor the Charles University. " +
-        "Check at least one of the two boxes."
-      );
+      alert(t("alertNoCheckbox"));
       return;
     }
 
     // when uploading to RES-Q, a provider must be selected
     if (uploadToResq && selectedProvider === null) {
-      // TODO: translate
-      alert("Select a provider");
+      alert(t("alertNoProvider"));
       return;
     }
 
@@ -203,7 +198,7 @@ export function UploadDialog() {
           {/* AUTH FAILED ERROR */}
           {(authError !== null) && (
             <Alert severity="error" sx={{mb: 2}}>
-              Authentication has failed. Try uploading the file again.<br/>
+              { t("authFailedMessage") }<br/>
               <pre style={{whiteSpace: "pre-wrap"}}>{ authError }</pre>
             </Alert>
           )}
@@ -212,14 +207,10 @@ export function UploadDialog() {
           {(user !== null) && (<>
             {fileAlreadyUploaded && (
               <Alert severity="warning" sx={{mb: 2}}>
-                This file has already been uploaded,
-                are you sure you want to upload it again? You can upload
-                it again if you made changes to the file and you want to
-                propagate these changes to the RES-Q registry
-                and the Charles University.<br />
+                { t("alreadyUploadedWarning") }<br />
                 {caseId && (<>
                   <br />
-                  Case ID in the RES-Q registry:<br />
+                  { t("caseIdInRegistry") }<br />
                   <strong>{caseId}</strong><br/>
                   <br/>
                   <a
@@ -232,17 +223,16 @@ export function UploadDialog() {
             )}
 
             <Alert severity="info" sx={{mb: 2}}>
-              You are logged in as:<br/>
+              { t("loggedInAs") }<br/>
               <strong>
                 {user.title} {user.first_name} {user.last_name}
               </strong><br />
-              And you are uploading the file:<br/>
+              { t("uploadingTheFile") }<br/>
               <strong>{ fileName }</strong>
             </Alert>
 
             <Typography variant="body1" color="text.primary" gutterBottom>
-              By clicking the upload button you will upload the completed
-              file to the RES-Q registry and Charles University.
+              { t("instructions") }
             </Typography>
 
             <FormGroup>
@@ -262,7 +252,7 @@ export function UploadDialog() {
                     gutterBottom: true,
                   },
                 }}
-                label="Upload file to the RES-Q registry"
+                label={t("resqCheckbox")}
               />
               <FormControl
                 size="small"
@@ -272,19 +262,21 @@ export function UploadDialog() {
                   display: uploadToResq ? undefined : "none"
                 }}
               >
-                <InputLabel id="resq-provider-select-label">Provider</InputLabel>
+                <InputLabel id="resq-provider-select-label">
+                  { t("providerLabel") }
+                </InputLabel>
                 <Select
                   labelId="resq-provider-select-label"
                   id="resq-provider-select"
                   value={String(selectedProvider)}
-                  label="Provider"
+                  label={t("providerLabel")}
                   onChange={e => setSelectedProvider(
                     e.target.value === "null" ? null : Number(e.target.value)
                   )}
                   disabled={!uploadToResq}
                 >
                   <MenuItem value="null">
-                    <em>Select a provider</em>
+                    <em>{ t("providerEmpty") }</em>
                   </MenuItem>
                   {Object.keys(providers).map(pi => (
                     <MenuItem key={pi} value={String(pi)}>{providers[pi]}</MenuItem>
@@ -307,7 +299,7 @@ export function UploadDialog() {
                     gutterBottom: true,
                   },
                 }}
-                label="Upload file to the Charles University"
+                label={ t("ufalCheckbox") }
               />
             </FormGroup>
 
@@ -321,14 +313,14 @@ export function UploadDialog() {
               icon={<CircularProgress size={24} />}
               sx={{mb: 2}}
             >
-              Uploading...
+              { t("uploadingSpinner") }
             </Alert>
           )}
 
           {/* UPLOADING FAILED */}
           {(uploadError !== null) && (
             <Alert severity="error" sx={{mb: 2}}>
-              Uploading has failed. Try uploading the file again.<br/>
+              { t("uploadingFailedMessage") }<br/>
               <pre style={{whiteSpace: "pre-wrap"}}>{ uploadError }</pre>
             </Alert>
           )}
@@ -336,12 +328,9 @@ export function UploadDialog() {
           {/* UPLOADING SUCCEEDED */}
           {uploadDone && (
             <Alert severity="success" sx={{mb: 2}}>
-              Thank you for uploading the file. If you make any
-              changes to the file, you can upload it again and it will be
-              updated. If you've uploaded to RES-Q, make sure to open the
-              case there and submit it.<br />
+              { t("uploadingDoneMessage") }<br />
               <br />
-              Case ID in the RES-Q registry:<br />
+              { t("caseIdInRegistry") }<br />
               {caseId ? (
                 <>
                   <strong>{caseId}</strong><br/>
@@ -353,7 +342,7 @@ export function UploadDialog() {
                   >{ config.resqRecordUrl(recordId) }</a>
                 </>
               ) : (
-                <em>The file was not yet uploaded to the RES-Q registry.</em>
+                <em>{ t("uploadingDoneNoCaseId") }</em>
               )}
             </Alert>
           )}
@@ -365,7 +354,7 @@ export function UploadDialog() {
           variant="text"
           onClick={() => setIsOpen(false)}
         >
-          { (!user || uploadError || uploadDone) ? "Close" : t("cancel") /* TODO: translate */}
+          { (!user || uploadError || uploadDone) ? t("close") : t("cancel") }
         </Button>
         {(user && !uploadError && !uploadDone) && (
           <Button
@@ -375,7 +364,7 @@ export function UploadDialog() {
             onClick={() => performUploading()}
             endIcon={<LocalShippingIcon/>}
           >
-            Upload {/* TODO: translate */}
+            { t("upload") }
           </Button>
         )}
       </DialogActions>

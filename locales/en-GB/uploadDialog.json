@@ -1,4 +1,29 @@
 {
   "title": "File upload into the registry",
-  "cancel": "Cancel"
+
+  "alertNoCheckbox": "Uploading to neither RES-Q, nor the Charles University. Check at least one of the two boxes.",
+  "alertNoProvider": "Select a provider to upload on behalf of.",
+  
+  "authFailedMessage": "Authentication has failed. Try uploading the file again.",
+  "alreadyUploadedWarning": "This file has already been uploaded, are you sure you want to upload it again? You can upload it again if you made changes to the file and you want to propagate these changes to the RES-Q registry and the Charles University.",
+  "caseIdInRegistry": "Case ID in the RES-Q registry:",
+  
+  "loggedInAs": "You are logged in as:",
+  "uploadingTheFile": "And you are uploading the file:",
+
+  "instructions": "By clicking the upload button you will upload the completed file to the RES-Q registry and Charles University.",
+  "resqCheckbox": "Upload file to the RES-Q registry",
+  "providerLabel": "Provider",
+  "providerEmpty": "Select a provider",
+  "ufalCheckbox": "Upload file to the Charles University",
+  
+  "uploadingSpinner": "Uploading...",
+
+  "uploadingFailedMessage": "Uploading has failed. Try uploading the file again.",
+  "uploadingDoneMessage": "Thank you for uploading the file. If you make any changes to the file, you can upload it again and it will be updated. If you've uploaded to RES-Q, make sure to open the case there and submit it.",
+  "uploadingDoneNoCaseId": "The file was not yet uploaded to the RES-Q registry.",
+
+  "close": "Close",
+  "cancel": "Cancel",
+  "upload": "Upload"
 }
