@@ -9,13 +9,13 @@ https://ufallab.ms.mff.cuni.cz/~mayer/development-resq-doc-marker/
 > **Note:** The production deployment runs at:
 > https://quest.ms.mff.cuni.cz/resq-doc-marker/
 
-We will test the process on a brand new file. In production though, you would start with a file that is ready, fully annotated, without any validation errors.
+We will test the process on a brand new file, though, in production, you would start with a file that is ready, fully annotated, without any validation errors.
 
 > **Note:** The file can be uploaded regardless of validation errors or missing values.
 
 Create a new file by clicking the `Create new file` button. Use the default form and click `Create` in the dialog. Switch to the `Annotate` mode in the top right mode selector. In the form, fill out an age of 42 in the `Age at stroke onset`, so that we have some data to see in the uploaded file.
 
-Now, in the top menu, click `Tools > Upload file to RES-Q`. You will be redirected to the login page of the RES-Q registry. Specifically, the *development* deployment at the domain `auth.dev.qualityregistry.org` (see the `dev` in the domain). Log in with your development RES-Q account.
+Now, in the top menu, click `Tools > Upload file to RES-Q`. You will be redirected to the login page of the RES-Q registry. Specifically, the *development* deployment at the domain `auth.dev.qualityregistry.org` (see the `dev` in the domain). Log in with your **development RES-Q account**.
 
 > **Note:** The production deployment of DocMarker will redirect you to the production deployment of RES-Q registry.
 
@@ -29,14 +29,25 @@ You can click the `Upload` button and the necessary actions will be performed.
 
 When the upload finishes, you will be shown a green success box with assigned *Case ID* from the RES-Q registry. This case ID will be stored in the DocMarker file so that any future uploads will modify the data for this RES-Q case, instead of creating a new one.
 
-You can click the `Close` button, which takes you back to the welcome screen of DocMarker.
+![Upload dialog success screenshot](upload-dialog-success-screenshot.png)
+
+Clicking the link at the bottom of the green box will open the created RES-Q case in a new tab. There you can verify the uploaded data and submit the case.
+
+You can click the `Close` button on the dialog, which takes you back to the welcome screen of DocMarker.
 
 
-## Interacting with the created RES-Q case
+## Uploading files to RES-Q
 
-Uploading to RES-Q is not implemented. The goal is to only create the case and upload data, but let the user themselves to verify the data in RES-Q and submit manually.
+When you upload a file that has not been uploaded before, a new RES-Q case is created and filled out with the data.
 
-TODO
+The case is created in the *draft* mode and you then must manually submit the case from the RES-Q web application (link to which is displayed by DocMarker after successful upload).
+
+If you make changes to the DocMarker file and upload again, the corresponding RES-Q case is updated. If the case is already submitted, the upload will fail. To update an already submitted case, you need to set it back to draft mode from inside the RES-Q web application.
+
+Uploading an already uploaded file provides a warning and the link to the case before the upload is finalized:
+
+![Reupload dialog warning screenshot](reupload-dialog-warning-screenshot.png)
+
 
 
 ## Locating the uploaded file at ÚFAL
