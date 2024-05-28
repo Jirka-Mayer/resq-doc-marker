@@ -76,8 +76,9 @@ Commit all changes to git so that when we pull, we get the latest version to dep
 
 ```bash
 # connect to the resq-plus machine
-ssh mayer@quest.ms.mff.cuni.cz
-ssh resq-plus
+# ssh mayer@quest.ms.mff.cuni.cz
+# ssh resq-plus
+ssh resq-plus.quest.ms.mff.cuni.cz
 
 # enter the backend folder
 cd /home/mayer/backend-server
