@@ -1,30 +1,30 @@
 {
-  "title": "Nahrání formuláře do registru",
+  "title": "Odeslání formuláře do registru",
 
-  "alertNoCheckbox": "Není vybrané nahrávání ani do RES-Q, ani na Univerzitu Karlovu. Zaškrtněte alespoň jeden z boxů.",
-  "alertNoProvider": "Vyberte poskytovatele, pro kterého má proběhnout nahrání.",
+  "alertNoCheckbox": "Není vybrané odesílání ani do RES-Q, ani na Univerzitu Karlovu. Zaškrtněte alespoň jeden z boxů.",
+  "alertNoProvider": "Vyberte poskytovatele, pro kterého má proběhnout odeslání.",
   
-  "authFailedMessage": "Nezdařila se autentizace. Zkuste soubor nahrát znovu.",
-  "alreadyUploadedWarning": "Tento soubor již byl dříve nahrán, opravdu ho chcete nahrát znovu? Opětovné nahrání lze provést pokud jste v souboru provedli změny a chtěli byste je propagovat do RES-Q a na Univerzitu Karlovu.",
+  "authFailedMessage": "Nezdařila se autentizace. Zkuste soubor odeslat znovu.",
+  "alreadyUploadedWarning": "Tento soubor již byl dříve odeslán, opravdu ho chcete odeslat znovu? Opětovné odeslání lze provést pokud jste v souboru provedli změny a chtěli byste je propagovat do RES-Q a na Univerzitu Karlovu.",
   
   "caseIdInRegistry": "Case ID v RES-Q registru:",
   
   "loggedInAs": "Jste přihlášeni jako uživatel:",
-  "uploadingTheFile": "A nahráváte soubor:",
+  "uploadingTheFile": "A odesíláte soubor:",
 
-  "instructions": "Kliknutím na tlačítko nahrání nahrajete vyplněný soubor do RES-Q registru a na Univerzitu Karlovu.",
-  "resqCheckbox": "Nahrát soubor do registru RES-Q",
+  "instructions": "Kliknutím na tlačítko odeslání nahrajete vyplněný soubor do RES-Q registru a na Univerzitu Karlovu.",
+  "resqCheckbox": "Odeslat soubor do registru RES-Q",
   "providerLabel": "Poskytovatel",
   "providerEmpty": "Vybrat poskytovatele",
-  "ufalCheckbox": "Nahrát soubor na Univerzitu Karlovu",
+  "ufalCheckbox": "Odeslat soubor na Univerzitu Karlovu",
   
-  "uploadingSpinner": "Nahrávání...",
+  "uploadingSpinner": "Odesílání...",
 
-  "uploadingFailedMessage": "Nahrávání se nezdařilo. Zkuste soubor nahrát znovu.",
-  "uploadingDoneMessage": "Děkujeme za nahrání souboru. Pokud v souboru provedete změny, můžete ho nahrát znovu a změny se pak promítnou i v registru. Pokud jste soubor nahráli do RES-Q registru, otevřte vzniklý záznam ještě tam a potvrďte jeho odeslání.",
-  "uploadingDoneNoCaseId": "Soubor ještě nebyl nahrán do RES-Q registru.",
+  "uploadingFailedMessage": "Odesílání se nezdařilo. Zkuste soubor odeslat znovu.",
+  "uploadingDoneMessage": "Děkujeme za odeslání souboru. Pokud v souboru provedete změny, můžete ho odeslat znovu a změny se pak promítnou i v registru. Pokud jste soubor nahráli do RES-Q registru, vzniklý RES-Q záznam je nyní v rozpracovaném režimu. Otevřte ho v RES-Q a potvrďte jeho odeslání ještě tam.",
+  "uploadingDoneNoCaseId": "Soubor ještě nebyl odeslán do RES-Q registru.",
 
   "close": "Zavřít",
   "cancel": "Zrušit",
-  "upload": "Nahrát"
+  "upload": "Odeslat"
 }

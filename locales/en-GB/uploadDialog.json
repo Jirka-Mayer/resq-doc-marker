@@ -1,29 +1,29 @@
 {
-  "title": "File upload into the registry",
+  "title": "Submit file into the registry",
 
-  "alertNoCheckbox": "Uploading to neither RES-Q, nor the Charles University. Check at least one of the two boxes.",
-  "alertNoProvider": "Select a provider to upload on behalf of.",
+  "alertNoCheckbox": "Submitting to neither RES-Q, nor the Charles University. Check at least one of the two boxes.",
+  "alertNoProvider": "Select a provider to submit on behalf of.",
   
-  "authFailedMessage": "Authentication has failed. Try uploading the file again.",
-  "alreadyUploadedWarning": "This file has already been uploaded, are you sure you want to upload it again? You can upload it again if you made changes to the file and you want to propagate these changes to the RES-Q registry and the Charles University.",
+  "authFailedMessage": "Authentication has failed. Try submitting the file again.",
+  "alreadyUploadedWarning": "This file has already been submitted, are you sure you want to submit it again? You can submit it again if you made changes to the file and you want to propagate these changes to the RES-Q registry and the Charles University.",
   "caseIdInRegistry": "Case ID in the RES-Q registry:",
   
   "loggedInAs": "You are logged in as:",
-  "uploadingTheFile": "And you are uploading the file:",
+  "uploadingTheFile": "And you are submitting the file:",
 
-  "instructions": "By clicking the upload button you will upload the completed file to the RES-Q registry and Charles University.",
-  "resqCheckbox": "Upload file to the RES-Q registry",
+  "instructions": "By clicking the submit button you will submit the completed file to the RES-Q registry and Charles University.",
+  "resqCheckbox": "Submit file to the RES-Q registry",
   "providerLabel": "Provider",
   "providerEmpty": "Select a provider",
-  "ufalCheckbox": "Upload file to the Charles University",
+  "ufalCheckbox": "Submit file to the Charles University",
   
-  "uploadingSpinner": "Uploading...",
+  "uploadingSpinner": "Submitting...",
 
-  "uploadingFailedMessage": "Uploading has failed. Try uploading the file again.",
-  "uploadingDoneMessage": "Thank you for uploading the file. If you make any changes to the file, you can upload it again and it will be updated. If you've uploaded to RES-Q, make sure to open the case there and submit it.",
-  "uploadingDoneNoCaseId": "The file was not yet uploaded to the RES-Q registry.",
+  "uploadingFailedMessage": "Submission has failed. Try submitting the file again.",
+  "uploadingDoneMessage": "Thank you for submitting the file. If you make any changes to the file, you can submit it again and it will be updated. If you've submitted to RES-Q, the case is currently in the draft state. Open RES-Q and submit the case there as well.",
+  "uploadingDoneNoCaseId": "The file was not yet submitted to the RES-Q registry.",
 
   "close": "Close",
   "cancel": "Cancel",
-  "upload": "Upload"
+  "upload": "Submit"
 }

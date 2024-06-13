@@ -1,6 +1,6 @@
 {
   "name": "resq-doc-marker",
-  "version": "1.0.2",
+  "version": "1.0.3-dev",
   "source": "src/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
