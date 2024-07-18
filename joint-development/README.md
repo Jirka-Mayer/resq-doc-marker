@@ -9,7 +9,7 @@ All the following commands assume you are inside this folder, NOT the repository
 
 1. Enter this folder in terminal
 2. Run `make all`
-3. Run `npm serve` to run Parcel
+3. Run `npm run start` to run Parcel
 4. Treat the `doc-marker` and `resq-customization` as the usual development repositories - open one code editor in each, commit changes in each. The running Parcel instance will compile these changes automatically.
 
 > **Note:** Never use this setup for package updates and other specific changes.
