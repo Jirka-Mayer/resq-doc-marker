@@ -1,5 +1,6 @@
-import { currentOptions } from "doc-marker";
+import { DmOptions } from "doc-marker";
 import config from "../config";
+import { ResqFormDefinition } from "../../forms";
 
 /**
  * Maps the DocMarker form ID to the RES-Q form localization ID based on
@@ -8,20 +9,22 @@ import config from "../config";
  */
 export function getResqFormLocalizationId(
   docMarkerFormId: string,
-  language: string
+  language: string,
+  dmOptions: DmOptions,
 ): number {
   // get the definition of the current form
-  const formDefinition = currentOptions.forms[docMarkerFormId];
+  const formDefinition = dmOptions.forms[docMarkerFormId] as ResqFormDefinition;
 
   if (!formDefinition) {
     throw new Error("Failed to load form definition for: " + docMarkerFormId);
   }
 
   // select dev or prod
-  const lookupDictionary = (config.uploadServerActInDevelopment
-    ? formDefinition?.resqFormLocalizationIds?.development
-    : formDefinition?.resqFormLocalizationIds?.production) || {};
-  
+  const lookupDictionary =
+    (config.uploadServerActInDevelopment
+      ? formDefinition?.resqFormLocalizationIds?.development
+      : formDefinition?.resqFormLocalizationIds?.production) || {};
+
   // lookup the resqFormLocalization ID if present
   if (language in lookupDictionary) {
     return lookupDictionary[language] as number;
@@ -31,7 +34,7 @@ export function getResqFormLocalizationId(
   if (!("en-GB" in lookupDictionary)) {
     throw new Error(
       "There is no 'en-GB' RES-Q form localization ID present in form " +
-      "definitions. Make sure you have provided the right configuration."
+        "definitions. Make sure you have provided the right configuration.",
     );
   }
 

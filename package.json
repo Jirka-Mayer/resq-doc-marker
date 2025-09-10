@@ -4,8 +4,11 @@
   "source": "src/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "start": "rm -rf dist .parcel-cache && parcel",
-    "build": "rm -rf dist .parcel-cache && parcel build --public-url ./"
+    "clean": "rm -rf dist .parcel-cache",
+    "start": "npm run clean && parcel",
+    "build": "npm run clean && parcel build --public-url ./",
+    "prettier-check": "prettier 'src/**/*.{ts,tsx}' 'forms/**/*.{ts,tsx}' 'locales/**/*.{ts,tsx}' --check",
+    "prettier-write": "prettier 'src/**/*.{ts,tsx}' 'forms/**/*.{ts,tsx}' 'locales/**/*.{ts,tsx}' --write"
   },
   "peerDependencies": {
     "@emotion/react": "^11.0.0",
@@ -25,9 +28,10 @@
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.2",
     "buffer": "^6.0.3",
-    "doc-marker": "github:Jirka-Mayer/doc-marker#46026284127cb3fbf202ada75c2f1690d53efb9a",
+    "doc-marker": "github:Jirka-Mayer/doc-marker#460c457964dd1e83d2bc646ffb3fcb4017128cda",
     "parcel": "^2.8.0",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "prettier": "^3.5.3"
   },
   "dependencies": {
     "lodash": "^4.17.21"

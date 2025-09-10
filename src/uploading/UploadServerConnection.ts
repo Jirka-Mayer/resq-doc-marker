@@ -24,7 +24,7 @@ export class UploadServerConnection {
   public readonly resqUser: ResqUser;
 
   public readonly resqProviders: ResqProviders = {};
-  
+
   constructor(
     uploadTransactionId: number,
     docMarkerToken: string,
@@ -42,26 +42,28 @@ export class UploadServerConnection {
    * RES-Q Keycloak server authorization code to the
    * ÚFAL upload server. This also initiates an upload trasaction.
    */
-  static async connect(authorizationCode: string): Promise<UploadServerConnection> {
+  static async connect(
+    authorizationCode: string,
+  ): Promise<UploadServerConnection> {
     const response = await fetch(
       new URL("upload-transaction", config.uploadServerBaseUrl),
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json"
+          Accept: "application/json",
         },
         body: JSON.stringify({
-          "authorization_code": authorizationCode,
-          "keycloak_redirect_uri": getCallbackUrl(),
-          "is_development": config.uploadServerActInDevelopment
-        })
-      }
+          authorization_code: authorizationCode,
+          keycloak_redirect_uri: getCallbackUrl(),
+          is_development: config.uploadServerActInDevelopment,
+        }),
+      },
     );
 
     if (response.status !== 201) {
       let msg = `Non-201 status (${response.status} ${response.statusText})\n`;
-      msg += "Response body: " + await response.text();
+      msg += "Response body: " + (await response.text());
       throw new Error(msg);
     }
 
@@ -88,34 +90,34 @@ export class UploadServerConnection {
     uploadToUfal: boolean,
     uploadToResq: boolean,
     resqProviderId: number | null,
-    resqFormLocalizationId: number | null
+    resqFormLocalizationId: number | null,
   ): Promise<object | null> {
     const response = await fetch(
       new URL(
         `upload-transaction/${this.uploadTransactionId}`,
-        config.uploadServerBaseUrl
+        config.uploadServerBaseUrl,
       ),
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer " + this.docMarkerToken
+          Accept: "application/json",
+          Authorization: "Bearer " + this.docMarkerToken,
         },
         body: JSON.stringify({
-          "doc_marker_token": this.docMarkerToken,
-          "file_json": fileJson,
-          "upload_to_resq": uploadToResq,
-          "upload_to_ufal": uploadToUfal,
-          "resq_provider_id": resqProviderId,
-          "resq_form_localization_id": resqFormLocalizationId,
-        })
-      }
+          doc_marker_token: this.docMarkerToken,
+          file_json: fileJson,
+          upload_to_resq: uploadToResq,
+          upload_to_ufal: uploadToUfal,
+          resq_provider_id: resqProviderId,
+          resq_form_localization_id: resqFormLocalizationId,
+        }),
+      },
     );
-  
+
     if (response.status !== 200) {
       let msg = `Non-200 status (${response.status} ${response.statusText})\n`;
-      msg += "Response body: " + await response.text();
+      msg += "Response body: " + (await response.text());
       throw new Error(msg);
     }
 

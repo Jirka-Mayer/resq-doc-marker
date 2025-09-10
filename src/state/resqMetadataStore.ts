@@ -3,7 +3,7 @@
  * RES-Q exporting, when the file is deserialized. This data can be displayed
  * by the application, but is not really modified. It is just preserved so
  * that it can be serialized again when the file is being saved.
- * 
+ *
  * Analogous to DocMarker's formStore or reportStore.
  */
 

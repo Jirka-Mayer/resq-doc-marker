@@ -5,27 +5,28 @@
 
 // ========== Controls ==========
 
-import ResqMultiselectGroup, {
+import {
   resqMultiselectGroupTester,
-  ResqMultiselectGroup as ResqMultiselectGroupUnwrapped
-} from "./multiselect/ResqMultiselectGroup"
+  ResqMultiselectGroup,
+  ResqMultiselectGroupUnwrapped,
+} from "./multiselect/ResqMultiselectGroup";
 
-import ResqPostAcuteFindingsGroup, {
+import {
   resqPostAcuteFindingsGroupTester,
-  ResqPostAcuteFindingsGroup as ResqPostAcuteFindingsGroupUnwrapped
-} from "./post-acute-findings/PostAcuteFindingsGroup"
-
+  ResqPostAcuteFindingsGroup,
+  ResqPostAcuteFindingsGroupUnwrapped,
+} from "./post-acute-findings/PostAcuteFindingsGroup";
 
 // ========== Export ==========
 
 export const Unwrapped = {
   ResqMultiselectGroup: ResqMultiselectGroupUnwrapped,
-  ResqPostAcuteFindingsGroup: ResqPostAcuteFindingsGroupUnwrapped
-}
+  ResqPostAcuteFindingsGroup: ResqPostAcuteFindingsGroupUnwrapped,
+};
 
 export {
   ResqMultiselectGroup,
   resqMultiselectGroupTester,
   ResqPostAcuteFindingsGroup,
-  resqPostAcuteFindingsGroupTester
-}
+  resqPostAcuteFindingsGroupTester,
+};
