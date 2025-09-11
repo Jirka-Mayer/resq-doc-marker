@@ -28,7 +28,7 @@
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.2",
     "buffer": "^6.0.3",
-    "doc-marker": "github:Jirka-Mayer/doc-marker#460c457964dd1e83d2bc646ffb3fcb4017128cda",
+    "doc-marker": "github:Jirka-Mayer/doc-marker#91a622bdeb7fc941ba6c850f22e1eb723e4303d1",
     "parcel": "^2.8.0",
     "process": "^0.11.10",
     "prettier": "^3.5.3"

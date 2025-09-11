@@ -7,6 +7,7 @@ import * as slots from "./slots.jsx";
 import * as resqMetadataStore from "./state/resqMetadataStore";
 import { resqLocaleDefinitions } from "../locales";
 import { resqFormDefinitions } from "../forms";
+import { CuniNlpRobot } from "./robotApi/CuniNlpRobot";
 
 const defaultOptions = getDefaultOptions();
 
@@ -60,4 +61,6 @@ bootstrapDocMarker({
   // slotsImporter: async () => {
   //   return await import("./slots.jsx")
   // }
+
+  robot: new CuniNlpRobot(),
 });
