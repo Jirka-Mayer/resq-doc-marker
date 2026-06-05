@@ -1,13 +1,14 @@
 // parse the URL query string
-const urlParams = new URLSearchParams(window.location.search)
+const urlParams = new URLSearchParams(window.location.search);
 
 // make sense of the query string
-const beingRedirectedFromKeycloak = urlParams.get("keycloakCallback") === "true"
+const beingRedirectedFromKeycloak =
+  urlParams.get("keycloakCallback") === "true";
 
 /**
  * Is set to true when the upload dialog should be openned
  */
-export const openUploadDialog = beingRedirectedFromKeycloak
+export const openUploadDialog = beingRedirectedFromKeycloak;
 
 /**
  * Holds the OAuth 2.0 authorization code
@@ -15,8 +16,8 @@ export const openUploadDialog = beingRedirectedFromKeycloak
  * https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.2
  */
 export const authorizationCode = beingRedirectedFromKeycloak
-  ? (urlParams.get("code") || null)
-  : null
+  ? urlParams.get("code") || null
+  : null;
 
 /**
  * Holds the file UUID to upload
@@ -25,8 +26,8 @@ export const authorizationCode = beingRedirectedFromKeycloak
  * https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.2
  */
 export const fileUuid = beingRedirectedFromKeycloak
-  ? (urlParams.get("state") || null)
-  : null
+  ? urlParams.get("state") || null
+  : null;
 
 /**
  * Can be used to debug the uploading logic,
@@ -42,6 +43,6 @@ if (window.location.hostname !== "localhost") {
   window.history.replaceState(
     null, // state object, we don't use any
     "", // unused parameter
-    window.location.href.replace(window.location.search, "") // URL with query string removed
-  )
+    window.location.href.replace(window.location.search, ""), // URL with query string removed
+  );
 }
