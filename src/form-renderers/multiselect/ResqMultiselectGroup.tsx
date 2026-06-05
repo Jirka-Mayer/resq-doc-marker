@@ -33,7 +33,6 @@ import { useAtom } from "jotai";
 import {
   DocMarkerContext,
   rendererStyles as styles,
-  userPreferencesStore,
   dmLinearLayoutTester,
   DmLinearLayout,
 } from "doc-marker";
@@ -95,9 +94,9 @@ export function ResqMultiselectGroupUnwrapped(
 
   const layout = props.uischema as Layout;
 
-  const { fieldsRepository } = useContext(DocMarkerContext);
+  const { fieldsRepository, editorStore } = useContext(DocMarkerContext);
 
-  const [displayDebugInfo] = useAtom(userPreferencesStore.displayDebugInfoAtom);
+  const [displayDebugInfo] = useAtom(editorStore.displayDebugInfoAtom);
 
   const leaderUischema = layout.elements[0] as UISchemaElement & {
     scope: string;
