@@ -17,9 +17,7 @@ import {
 } from "./DimbuApiTypes";
 
 // TODO: move this into a config
-// TODO: fix the CORS issue and remove the proxy
-const DIMBU_URL =
-  "https://corsproxy.io/?url=https://quest.ms.mff.cuni.cz/dimbu";
+const DIMBU_URL = "https://quest.ms.mff.cuni.cz/dimbu";
 // Thresholds set basd on the email from Vojtěch Lanz from 20th Aug 2025 with those charts
 const EE_MINIMAL_QUESTION_CONFIDENCE = 0.5; // the model must perform well on this question
 const EE_MINIMAL_QUESTION_FREQUENCY = 0.1; // the model must be well-enough-trained for the question
