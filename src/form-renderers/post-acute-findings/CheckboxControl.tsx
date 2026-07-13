@@ -10,7 +10,12 @@ import {
   withJsonFormsControlProps,
   withTranslateProps,
 } from "@jsonforms/react";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import {
+  Backdrop,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+} from "@mui/material";
 import { useCallback } from "react";
 import * as multiselectStyles from "../multiselect/multiselect.module.scss";
 import { useContext } from "react";
@@ -22,10 +27,12 @@ import {
   useHighlightPinButton,
   useFieldActivity,
   DocMarkerContext,
+  RobotButtons,
 } from "doc-marker";
 
 export function CheckboxControlUnwrapped(props: ControlProps & TranslateProps) {
-  const { path, label, data, id, handleChange, visible, uischema } = props;
+  const { path, label, data, id, handleChange, t, visible, enabled, uischema } =
+    props;
 
   const { groupVisible } = useContext(PostAcuteFindingsContext);
 
@@ -77,9 +84,6 @@ export function CheckboxControlUnwrapped(props: ControlProps & TranslateProps) {
     data,
   );
 
-  // TODO ...
-  const hasVerifiedAppearance = false;
-
   /////////////
   // Actions //
   /////////////
@@ -97,16 +101,22 @@ export function CheckboxControlUnwrapped(props: ControlProps & TranslateProps) {
       className={[
         styles["field-row"],
         isFieldActive ? styles["field-row--active"] : "",
-        hasVerifiedAppearance ? styles["field-row--verified"] : "",
         multiselectStyles["checkbox-row"],
       ].join(" ")}
-      onClick={() => setFieldActive()}
+      style={{
+        position: "relative", // captures the backdrop
+      }}
+      onClick={() => {
+        if (!fieldPrediction.isBeingPredicted) {
+          setFieldActive();
+        }
+      }}
     >
       <Checkbox
         id={htmlId}
         checked={data === true}
         onChange={(e) => handleChange(path, e.target.checked)}
-        color={hasVerifiedAppearance ? "success" : "primary"}
+        color="primary"
         onFocus={onFocus}
       />
       <FormControlLabel
@@ -117,7 +127,32 @@ export function CheckboxControlUnwrapped(props: ControlProps & TranslateProps) {
 
       <HighlightPinButton />
 
-      {/* TODO: robot validation button */}
+      {/* Human validation in Multiselect groups is a little different
+      semantics-wise. It is only done for fields predicted as "true",
+      and ignored for others and ignored for the leader control when "true". */}
+      {enabled && data === true && (
+        <RobotButtons
+          t={t}
+          fieldId={fieldId}
+          fieldPrediction={fieldPrediction}
+        />
+      )}
+
+      {fieldPrediction.isBeingPredicted && (
+        <Backdrop
+          sx={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            background: "rgba(255, 255, 255, 0.8)",
+          }}
+          open={true}
+        >
+          <CircularProgress color="primary" />
+        </Backdrop>
+      )}
     </div>
   );
 }

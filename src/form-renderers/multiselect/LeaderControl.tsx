@@ -19,6 +19,8 @@ import {
   Radio,
   RadioGroup,
   Tooltip,
+  Backdrop,
+  CircularProgress,
 } from "@mui/material";
 import { useMemo } from "react";
 import StreamIcon from "@mui/icons-material/Stream";
@@ -28,6 +30,7 @@ import {
   rendererStyles as styles,
   useFieldActivity,
   useHighlightPinButton,
+  RobotButtons,
 } from "doc-marker";
 
 function stringifyValue(value) {
@@ -91,16 +94,6 @@ export function LeaderControlUnwrapped(props: ControlProps & TranslateProps) {
   const { isFieldActive, toggleFieldActivity, setFieldActive } =
     useFieldActivity(fieldId);
 
-  // === field state ===
-
-  /*
-    I guess it doesn't make sense for the leader to have field state.
-    Automatic extraction will be performed for individual checkboxes
-    and this value is then extracted from that, I guess?
-  */
-
-  const hasVerifiedAppearance = false;
-
   // === field highlights ===
 
   const { HighlightPinButton } = useHighlightPinButton({
@@ -138,6 +131,13 @@ export function LeaderControlUnwrapped(props: ControlProps & TranslateProps) {
     coerceData,
   });
 
+  // === robot prediction data ===
+
+  const fieldPrediction = robotPredictionStore.useFieldPrediction(
+    fieldId,
+    data,
+  );
+
   /////////////
   // Actions //
   /////////////
@@ -174,7 +174,16 @@ export function LeaderControlUnwrapped(props: ControlProps & TranslateProps) {
   );
 
   return (
-    <div onClick={() => setFieldActive()}>
+    <div
+      style={{
+        position: "relative", // captures the backdrop
+      }}
+      onClick={() => {
+        if (!fieldPrediction.isBeingPredicted) {
+          setFieldActive();
+        }
+      }}
+    >
       <InputLabel className={styles["field-label"]} htmlFor={htmlId}>
         {label || `${fieldId}`}
       </InputLabel>
@@ -184,7 +193,6 @@ export function LeaderControlUnwrapped(props: ControlProps & TranslateProps) {
         className={[
           styles["field-row"],
           isFieldActive ? styles["field-row--active"] : "",
-          hasVerifiedAppearance ? styles["field-row--verified"] : "",
         ].join(" ")}
       >
         <RadioGroup
@@ -204,28 +212,62 @@ export function LeaderControlUnwrapped(props: ControlProps & TranslateProps) {
           ) : null}
         </RadioGroup>
 
-        <div style={{ flex: "1" }}></div>
+        {/* Buttons wrap, since there's a lot of them */}
+        <div
+          style={{
+            flex: "1",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            flexWrap: "wrap",
+            justifyContent: "flex-end",
+          }}
+        >
+          {/* Reset to empty button */}
+          {data !== undefined && (
+            <Tooltip title={forgetTooltipLabel} disableInteractive>
+              <IconButton
+                onClick={() => handleChange(path, undefined)}
+                sx={{ p: "10px" }}
+              >
+                <StreamIcon />
+              </IconButton>
+            </Tooltip>
+          )}
 
-        {/* Reset to empty button */}
-        {data !== undefined && (
-          <Tooltip title={forgetTooltipLabel} disableInteractive>
-            <IconButton
-              onClick={() => handleChange(path, undefined)}
-              sx={{ p: "10px" }}
-            >
-              <StreamIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+          <HighlightPinButton />
 
-        <HighlightPinButton />
-
-        {/* NOTE: robot validation button is missing because field state is missing */}
+          {/* Human validation in Multiselect groups is a little different
+          semantics-wise. It is only done for fields predicted as "true",
+          and ignored for others and ignored for the leader control when "true". */}
+          {(data === false || data === null) && (
+            <RobotButtons
+              t={t}
+              fieldId={fieldId}
+              fieldPrediction={fieldPrediction}
+            />
+          )}
+        </div>
       </div>
       {errors !== "" && (
         <FormHelperText className={styles["field-error-message"]} error={true}>
           {errors}
         </FormHelperText>
+      )}
+      {fieldPrediction.isBeingPredicted && (
+        <Backdrop
+          sx={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            background: "rgba(255, 255, 255, 0.8)",
+          }}
+          open={true}
+        >
+          <CircularProgress color="primary" />
+        </Backdrop>
       )}
     </div>
   );
