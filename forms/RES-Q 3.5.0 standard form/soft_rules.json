@@ -1,0 +1,100 @@
+{
+  "type": "object",
+  "properties": {
+    "admission": {
+      "type": "object",
+      "properties": {
+        "medical_examination": {
+          "type": "object",
+          "properties": {
+            "diastolic_pressure": {
+              "maximum": {
+                "$data": "1/systolic_pressure"
+              }
+            }
+          }
+        }
+      }
+    },
+    "diagnosis": {
+      "type": "object",
+      "properties": {
+        "imaging": {
+          "type": "object",
+          "properties": {
+            "imaging_timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "formatMinimum": {
+                "$data": "/admission/admission_timestamp"
+              }
+            }
+          }
+        }
+      }
+    },
+    "treatment": {
+      "type": "object",
+      "properties": {
+        "thrombolysis": {
+          "type": "object",
+          "properties": {
+            "bolus_timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "formatMinimum": {
+                "$data": "/diagnosis/imaging/imaging_timestamp"
+              }
+            }
+          }
+        },
+        "ischemic_stroke": {
+          "type": "object",
+          "properties": {
+            "thrombectomy_transfer_timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "formatMinimum": {
+                "$data": "/diagnosis/imaging/imaging_timestamp"
+              }
+            },
+            "puncture_timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "formatMinimum": {
+                "$data": "/diagnosis/imaging/imaging_timestamp"
+              }
+            }
+          }
+        },
+        "intracerebral_hemorrhage": {
+          "type": "object",
+          "properties": {
+            "initiation_timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "formatMinimum": {
+                "$data": "/diagnosis/imaging/imaging_timestamp"
+              }
+            },
+            "evacuation_timestamp": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time",
+              "allOf": [
+                {
+                  "format": "date-time",
+                  "formatMinimum": {
+                    "$data": "/diagnosis/imaging/imaging_timestamp"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
