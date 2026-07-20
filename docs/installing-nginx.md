@@ -22,7 +22,8 @@ We want the `resq-doc-marker` URL path prefix to stay in the path, so that any s
 ```bash
 # the quest proxy strips away the /resq-doc-marker/ prefix, but we want it
 # if it's missing, return it back in
-rewrite ^/(?!resq-doc-marker)(.*)$ /resq-doc-marker/$1 last;
+rewrite ^/$ /resq-doc-marker/index.html last;
+rewrite ^/(.*)$ /resq-doc-marker/$1 last;
 ```
 
 Which means we will move the webserver root folder to `/var/www` and all static files will then be served from a folder `resq-doc-marker` inside the `www` folder. But in fact, we will make this folder a symlink to the compiled frontend folder `/home/mayer/frontend-doc-marker`. We change this in the configuration file:
