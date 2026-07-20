@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf dist .parcel-cache",
     "start": "npm run clean && parcel",
-    "build": "npm run clean && parcel build --public-url ./",
+    "build": "npm run clean && parcel build --no-scope-hoist --public-url ./",
     "prettier-check": "prettier 'src/**/*.{ts,tsx}' 'forms/**/*.{ts,tsx}' 'locales/**/*.{ts,tsx}' --check",
     "prettier-write": "prettier 'src/**/*.{ts,tsx}' 'forms/**/*.{ts,tsx}' 'locales/**/*.{ts,tsx}' --write"
   },
