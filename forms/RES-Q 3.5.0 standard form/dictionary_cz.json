@@ -1,0 +1,1297 @@
+{
+  "common": {
+    "yes": "ano",
+    "no": "ne",
+    "null": "neznámé",
+    "select": "Vyberte ...",
+    "time_null": "neznámý čas",
+    "date_null": "neznámý den"
+  },
+  "group": {
+    "admission": "Přijetí",
+    "hospitalization": "Základní data",
+    "IDT": "Zobrazovací metody, diagnóza a léčba",
+    "post_acute": {
+      "main": "Postakutní péče",
+      "findings": "Nález na CT/MR po rekanalizaci",
+      "fever": "Teplota",
+      "hyperglycemia": "Glykémie",
+      "swallow": "Polykání",
+      "rehabilitation": "Rehabilitace"
+    },
+    "discharge": {
+      "main": "Propuštění z péče"
+    },
+    "follow_up": "Monitoring po 3 měsících"
+  },
+  "anamnesis": {
+    "age": {
+      "label": "Věk při přijetí",
+      "description": "0 až 120 let"
+    },
+    "sex": {
+      "label": "Biologické pohlaví",
+      "male": "muž",
+      "female": "žena",
+      "null": "neznámé"
+    },
+    "risk_factors": {
+      "any_risk_factor": {
+        "label": "Anamnéza",
+        "yes": "ano",
+        "no": "nic z uvedeného",
+        "null": "neznámé",
+        "error": {
+          "multiselect": "zvolte nejméně jednu z následujících možností"
+        }
+      },
+      "hypertension": {
+        "label": "hypertenze"
+      },
+      "diabetes": {
+        "label": "diabetes"
+      },
+      "hyperlypidemia": {
+        "label": "hyperlipidémie"
+      },
+      "active_smoker": {
+        "label": "kuřák (alespoň 1 cigareta v posledním roce)"
+      },
+      "ischemic_stroke": {
+        "label": "předchozí ischemická/TIA CMP vedoucí k hospitalizaci"
+      },
+      "hermorrhage_stroke": {
+        "label": "předchozí hemoragická CMP vedoucí k hospitalizaci"
+      },
+      "atrial_fibrillation": {
+        "label": "fibrilace nebo flutter síní (paroxysmální/přetrvávající/trvalé)"
+      },
+      "coronary_artery": {
+        "label": "onemocnění koronárních tepen/předchozí infarkt myokardu"
+      },
+      "heart_failure": {
+        "label": "městnavé srdeční selhání"
+      },
+      "vte": {
+        "label": "hluboká žilní trombóza/plicní embolie"
+      },
+      "apnea": {
+        "label": "Spánková apnoe"
+      },
+      "alcohol_overuse": {
+        "label": "Nadužívání alkoholu se zvýšenou hladinou GGT"
+      }
+    },
+    "medication": {
+      "any_medication": {
+        "label": "Je známa medikace, kterou měl pacient před vznikem CMP?",
+        "yes": "ano",
+        "no": "nic z uvedeného",
+        "null": "neznámé",
+        "error": {
+          "multiselect": "zvolte nejméně jednu z následujících možností"
+        }
+      },
+      "antidiabetics": {
+        "label": "antidiabetika"
+      },
+      "antihypertensives": {
+        "label": "antihypertenzivní medikace"
+      },
+      "antiplatelets": {
+        "label": "protidestičková medikace (antiagregancia)"
+      },
+      "anticoagulants": {
+        "label": "antikoagulancia"
+      },
+      "hormonal_contraception": {
+        "label": "hormonální antikoncepce"
+      },
+      "statin": {
+        "label": "statiny"
+      },
+      "antiplatelet_substances": {
+        "asa": {
+          "label": "ASA (aspirin)"
+        },
+        "cilostazol": {
+          "label": "cilostazol"
+        },
+        "clopidogrel": {
+          "label": "clopidogrel"
+        },
+        "ticagrelor": {
+          "label": "ticagrelor"
+        },
+        "ticlopidine": {
+          "label": "ticlopidine"
+        },
+        "prasugrel": {
+          "label": "prasugrel"
+        },
+        "dipyridamole": {
+          "label": "dipyridamol, pomalé uvolňování"
+        },
+        "other": {
+          "label": "jiné antiagregancium"
+        }
+      },
+      "anticoagulant_substances": {
+        "warfarin": {
+          "label": "warfarin"
+        },
+        "heparin": {
+          "label": "LMW heparin/heparin"
+        },
+        "dabigatran": {
+          "label": "dabigatran"
+        },
+        "rivaroxaban": {
+          "label": "rivaroxaban"
+        },
+        "apixaban": {
+          "label": "apixaban"
+        },
+        "edoxaban": {
+          "label": "edoxaban"
+        },
+        "other": {
+          "label": "jiné antikoagulancium"
+        }
+      }
+    },
+    "prestroke_mrs": {
+      "label": "Stav funkční nezávislosti (mRS) před CMP",
+      "null": "nezjišteno"
+    }
+  },
+  "onset": {
+    "wakeup_stroke": {
+      "label": "Pacient se probudil s příznaky CMP",
+      "yes":"Ano",
+      "no":"Ne"
+    },
+    "sleep_timestamp": {
+      "label": "Kdy šel pacient spát?"
+    },
+    "inhospital_stroke": {
+      "label": "CMP během hospitalizace",
+      "yes":"Ano",
+      "no":"Ne"
+    },
+    "onset_date": {
+      "label": "Datum a čas vzniku CMP (Onset)"
+    }
+  },
+  "admission": {
+    "admission_timestamp": {
+      "label": "Datum a čas přijetí",
+      "description": "pokud čas není znám, uveďte nejpřesnější odhad",
+      "error": {
+        "formatMinimum": "Čas přijetí musí být po čase, kdy pacient šel spát"
+      }
+    },
+    "arrival_mode": {
+      "label": "Odkud a jak pacient přijel do vaší nemocnice?",
+      "ems": "z místa vzniku CMP sanitkou",
+      "private": "z místa vzniku CMP vlastní dopravou",
+      "hospital": "z jiné nemocnice",
+      "stroke_center": "z iktového centra (IC/KCC)",
+      "gp_ems": "od praktického nebo jiného amb. lékaře sanitkou",
+      "gp_private": "od praktického nebo jiného amb. lékaře vlastní dopravou"
+    },
+    "ems_prenotification": {
+      "label": "Byl příjezd pacienta notifikován záchrannou službou?"
+    },
+    "hospitalized_in": {
+      "label": "Pacient byl 1. den přijat na",
+      "icu": "JIP",
+      "telemetry_bed": "jiné monitorované lůžko (telemetrie)",
+      "standard_bed": "standardní lůžko"
+    },
+    "admission_department": {
+      "label": "Na které oddělení byl pacient přijat?",
+      "neurology": "neurologie",
+      "neurosurgery": "neurochirurgie",
+      "critical_care": "ARO/anesteziologie",
+      "internal_medicine": "interna",
+      "other": "jiné"
+    },
+    "first_contact_place": {
+      "label": "Místo prvního kontaktu s pacientem ve vaší nemocnici",
+      "direct_CT/MR": "CT/MR vyšetřovna",
+      "emergency": "iktová jednotka nebo ARO",
+      "outpatient_clinic": "pohotovost/urgentní příjem",
+      "other_department": "jiné oddělení"
+    },
+    "transferred_from_hospital": {
+      "label": "První nemocnice, kde byl pacient ošetřen"
+    },
+    "medical_examination": {
+      "systolic_pressure": {
+        "label": "Hodnota systolického tlaku (1. měření v nemocnici; mmHg)"
+      },
+      "diastolic_pressure": {
+        "label": "Hodnota diastolického tlaku (1. měření v nemocnici; mmHg)",
+        "error": {
+          "maximum": "Hodnota diastolického tlaku musí být menší 150 a menší než hodnota systolického tlaku"
+        }
+      },
+      "cholesterol": {
+        "label": "Hladina LDL cholesterolu (1. měření v nemocnici)[mg/dL]",
+        "placeholder": "0.00",
+        "null": "nezměřeno"
+      },
+      "glucose": {
+        "label": "Hladina glykémie (1. měření v nemocnici)[mg/dL]",
+        "placeholder": "0.00",
+        "null": "nezměřeno"
+      },
+      "inr_mode": {
+        "label": "Bylo provedeno vstupní vyšetření INR?",
+        "device": "ano, přímo u lůžka",
+        "lab": "ano, vzorek odeslán do laboratoře",
+        "not_done": "neprovedeno"
+      },
+      "inr_level": {
+        "label": "Hodnota INR"
+      },
+      "gcs": {
+        "label": "Glasgowská stupnice hloubky bezvědomí (GCS)",
+        "placeholder": "3-15"
+      },
+      "nihss": {
+        "label": "NIHSS při přijetí",
+        "placeholder": "0-42",
+        "null": "nezjišteno"
+      }
+    }
+  },
+  "diagnosis": {
+    "imaging": {
+      "imaging_type": {
+        "label": "Použité zobrazovací metody",
+        "ct": "nekontrastní CT",
+        "cta": "nekontrastní CT + CT angiografie",
+        "cta_perf": "nekontrastní CT + CT angiografie + CT perfuze",
+        "mr": "MR DWI/FLAIR",
+        "mra": "MR DWI/FLAIR + MR angiografie",
+        "mra_perf": "MR DWI/FLAIR + MR angiografie + MR perfuze",
+        "elsewhere": "provedeno jinde",
+        "not_done": "neprovedeno"
+      },
+      "imaging_timestamp": {
+        "label": "Datum a čas vyšetření CT/MR",
+        "error": {
+          "formatMinimum": "Datum a čas vyšetření musí následovat po všech předchozích klinických událostech"
+        }
+      },
+      "aspects_score": {
+        "label": "Hodnota ASPECTS",
+        "placeholder": "0-10"
+      },
+      "perfusion": {
+        "perfusion_deficit": {
+          "label": "Deficit při perfuzním vyšetření",
+          "medial": "mediální",
+          "anterior": "přední",
+          "posterior": "zadní",
+          "carotid": "karotická",
+          "bilateral_stenosis": "ne, analýza nespolehlivá z důvodu oboustranné stenózy",
+          "no_deficit": "bez deficitu"
+        },
+        "perfusion_core_volume": {
+          "label": "Objem jádra CT/MR deficitu na perfuzi (ml)"
+        },
+        "hypoperfusion_volume": {
+          "label": "Objem hypoperfúze (ml) na CT/MR:"
+        }
+      },
+      "old_infarcts": {
+        "any_infarct": {
+          "label": "Jsou na snímcích patrná starší ischemická ložiska?",
+          "yes": "ano",
+          "no": "ne",
+          "error": {
+            "multiselect": "zvolte nejméně jednu z následujících možností"
+          }
+        },
+        "cortical": {
+          "label": "kortikální"
+        },
+        "subcortical": {
+          "label": "subkortikální (bazální ganglia, vnitřní pouzdro)"
+        },
+        "brainstem": {
+          "label": "mozkový kmen"
+        }
+      },
+      "occlusion": {
+        "any_occlusion": {
+          "label": "Byla nalezena okluze?",
+          "yes": "ano",
+          "no": "ne",
+          "error": {
+            "multiselect": "zvolte nejméně jednu z následujících možností"
+          }
+        },
+        "mca_m1_left": {
+          "label": "MCA M1 - Arteria cerebri media M1 (vlevo)"
+        },
+        "mca_m2_left": {
+          "label": "MCA M2 - Arteria cerebri media M2 (vlevo)"
+        },
+        "mca_m3_left": {
+          "label": "MCA M3 - Arteria cerebri media M3 (vlevo)"
+        },
+        "cerebral_artery_left": {
+          "label": "Arteria cerebri anterior (vlevo)"
+        },
+        "pca_p1_left": {
+          "label": "PCA P1 - Arteria cerebri posterior P1 (vlevo)"
+        },
+        "pca_p2_left": {
+          "label": "PCA P2 - Arteria cerebri posterior P2 (vlevo)"
+        },
+        "artery_extracranial_left": {
+          "label": "Arteria carotis interna – extrakraniální (vlevo)"
+        },
+        "artery_intracranial_left": {
+          "label": "Arteria carotid interna – intrakraniální (vlevo)"
+        },
+        "mca_m1_right": {
+          "label": "MCA M1 - Arteria cerebri media M1 (vpravo)"
+        },
+        "mca_m2_right": {
+          "label": "MCA M2 - Arteria cerebri media M2 (vpravo)"
+        },
+        "mca_m3_right": {
+          "label": "MCA M3 - Arteria cerebri media M3 (vpravo)"
+        },
+        "cerebral_artery_right": {
+          "label": "Arteria cerebri anterior (vpravo)"
+        },
+        "pca_p1_right": {
+          "label": "PCA P1 - Arteria cerebri posterior P1 (vpravo)"
+        },
+        "pca_p2_right": {
+          "label": "PCA P2 - Arteria cerebri posterior P2 (vpravo)"
+        },
+        "artery_extracranial_right": {
+          "label": "Arteria carotis interna – extrakraniální (vpravo)"
+        },
+        "artery_intracranial_right": {
+          "label": "Arteria carotid interna – intrakraniální (vpravo)"
+        },
+        "basilar_artery": {
+          "label": "Arteria basilaris"
+        },
+        "vertebral_artery": {
+          "label": "Arteria vertebralis"
+        }
+      }
+    },
+    "stroke_type": {
+      "label": "Druh CMP:",
+      "is": "mozkový infarkt",
+      "ich": "intracerebrální krvácení",
+      "tia": "tranzitorní ischemická ataka (TIA)",
+      "sah": "subarachnoidální krvácení",
+      "cvt": "mozková žilní trombóza",
+      "mimics": "stroke mimics",
+      "undetermined": "neurčená"
+    }
+  },
+  "treatment": {
+    "thrombolysis": {
+      "thrombolysis_treatment": {
+        "label": "Byla ve vaší nemocnici podána IV trombolýza?",
+        "yes": "ano",
+        "no": "ne"
+      },
+      "drug": {
+        "label": "Léčivo",
+        "alteplase": "altepláza",
+        "tenecteplase": "tenektepláza",
+        "streptokinase": "streptokináza",
+        "staphylokinase": "stafylokináza"
+      },
+      "tenecteplase_brand": {
+          "label": "Název léku s tenekteplázou",
+          "metalyse": "Metalyse (Boehringer Ingelheim International)",
+          "tenectase": "Tenectase (Gennova Biopharmaceuticals)",
+          "tnkase": "TNKase (Genentech/Roche)",
+          "supraplase": "Supraplase (Cadila Pharmaceuticals)",
+          "velix": "Velix (Emcure Pharmaceuticals)",
+          "tenectelex": "Tenectelex (Abbott Healthcare)",
+          "telyse": "Telyse (Cipla)",
+          "tenepact": "Tenepact (Glenmark Pharmaceuticals)",
+          "other": "jiný"
+      },
+      "antidote_given": {
+        "label": "Bylo podáno antidotum antikoagulační léčby?",
+        "yes": "ano",
+        "no": "ne"
+      },
+      "drug_dose": {
+        "label": "Dávka léčiva (mg)"
+      },
+      "bolus_timestamp": {
+        "label": "Datum a čas podání bolusu",
+        "error": {
+          "formatMinimum": "Datum a čas bolusu musí následovat po všech předchozích klinických událostech"
+        }
+      },
+      "application_department": {
+        "label": "IV trombolýza podána v",
+        "radiology": "CT/MR vyšetřovna",
+        "icu": "iktová jednotka nebo ARO",
+        "emergency": "pohotovost/urgentní příjem",
+        "other": "jinde"
+      }
+    },
+    "ischemic_stroke": {
+      "no_thrombolysis_reasons": {
+        "label": "Uvěďte proč nebyla podána trombolýza",
+        "already_done_elsewhere": "již podstoupil trombolýzu v jiné nemocnici",
+        "time_window": "mimo časové/tkáňové okno",
+        "mild_deficit": "mírný deficit",
+        "disability": "premorbidní postižení",
+        "consent": "souhlas nebyl udělen",
+        "only_mt": "upřednostňována pouze mechanická trombektomie",
+        "no_drug": "lék na trombolýzu není k dispozici",
+        "lesion_developed": "ischemická léze se již vyvinula",
+        "bleeding": "předchozí krvácení",
+        "anticoagulant": "probíhající antikoagulační léčba",
+        "other": "jiné"
+      },
+      "no_thrombectomy_reasons": {
+        "label": "Uvěďte proč nebyla provedena trombektomie",
+        "already_done_elsewhere": "trombektomie provedena v jiné nemocnici",
+        "time_window": "mimo časové/tkáňové okno",
+        "mild_deficit": "mírný deficit",
+        "no_lvo": "bez okluze velké cévy",
+        "disability": "premorbidní postižení",
+        "consent": "souhlas nebyl udělen",
+        "cost": "náklady na léčbu",
+        "transferred": "přemístěn na trombektomii do jiné nemocnice",
+        "no_mt_facility": "trombektomie není k dispozici",
+        "not_possible": "technicky ji není možné provést",
+        "low_aspects": "nízké ASPECTS skóre",
+        "other": "jiné"
+      },
+      "thrombectomy_transfer_timestamp": {
+        "label": "Čas překladu pacienta z nemocnice (door-out)",
+        "error": {
+          "formatMinimum": "Datum a čas překladu musí následovat po všech předchozích klinických událostech"
+        }
+      },
+      "thrombectomy_treatment": {
+        "label": "Byla ve vaší nemocnici provedena trombektomie?",
+        "yes": "ano",
+        "no": "ne"
+      },
+      "puncture_timestamp": {
+        "label": "Datum a čas punkce třísla",
+        "error": {
+          "formatMinimum": "Datum a čas punkce musí následovat po všech předchozích klinických událostech"
+        }
+      },
+      "reperfusion_timestamp": {
+        "label": "Datum a čas reperfuze",
+        "error": {
+          "formatMinimum": "Datum a čas reperfuze musí následovat po čase punkce třísla"
+        }
+      },
+      "mtici_score": {
+        "label": "mTICI skóre po rekanalizaci",
+        "not_confirmed": "okluze nebyla potvrzena"
+      },
+      "mt_complications": {
+        "any_thrombectomy_complication": {
+          "label": "Komplikace při trombektomii",
+          "yes": "ano",
+          "no": "ne",
+          "error": {
+            "multiselect": "zvolte nejméně jednu z následujících možností"
+          }
+        },
+        "perforation": {
+          "label": "perforace cévy"
+        },
+        "dissection": {
+          "label": "disekce"
+        },
+        "embolization": {
+          "label": "embolizace do různých cévních oblastí"
+        },
+        "hematoma": {
+          "label": "hematom v arteriálním přístupu vyžadující transfuzi"
+        },
+        "other": {
+          "label": "jiná"
+        }
+      }
+    },
+    "intracerebral_hemorrhage": {
+      "bleeding_volume": {
+        "label": "Objem krvácení při přijetí (ml) [počítáno jako A(cm)xB(cm)xC(cm)/2]",
+        "placeholder": "0-300"
+      },
+      "hemorrhage_location": {
+        "label": "Místo intracerebrálního krvácení",
+        "supratentorial": "supratentoriální",
+        "infratentorial": "infratentoriální"
+      },
+      "hemorrhage_additional_location": {
+        "hemorrhage_additional_location_found": {
+          "label": "Další místo krvácení",
+          "yes": "ano",
+          "no": "ne",
+          "error": {
+            "multiselect":"zvolte nejméně jednu z následujících možností"
+          }
+        },
+        "intraventricular": {
+          "label": "intraventrikulární"
+        },
+        "subarachnoid": {
+          "label": "subarachnoidální"
+        }
+      },
+      "last_dose_noac": {
+        "label":"Poslední dávka NOAC/DOAC",
+        "null": "neznámé"
+      },
+      "antihypertensive_given": {
+        "label":"Bylo podáno IV antihypertenzivum?",
+        "yes": "ano",
+        "no": "ne",
+        "null":"neznámé"
+      },
+      "antihypertensive_timestamp": {
+        "label":"Čas iniciace IV antihypertenziva v nemocnici",
+        "null":"neznámé",
+        "error": {
+          "formatMinimum": "Datum a čas podání IV antihypertenziva musí následovat po čase přijetí do nemocnice"
+        }
+      },
+      "systolic_below_140": {
+        "label":"Bylo dosaženo systolického tlaku pod 140 po podání IV antihypertenziva?",
+        "yes": "ano",
+        "no": "ne",
+        "null":"neznámé"
+      },
+      "systolic_below_140_timestamp": {
+        "label":"Kdy bylo dosaženo systolického tlaku pod 140 po podání IV antihypertenziva?",
+        "null":"neznámé",
+        "error": {
+          "formatMinimum": "BP < 140 musí následovat po čase podání IV antihypertenziva"
+        }
+      },
+      "bleeding_reason": {
+        "any_bleeding_reason": {
+          "label": "Byla nalezena příčina krvácení?",
+          "yes": "ano",
+          "no": "ne",
+          "error": {
+            "multiselect": "zvolte nejméně jednu z následujících možností"
+          }
+        },
+        "hypertension": {
+          "label": "arteriální hypertenze"
+        },
+        "aneurysm": {
+          "label": "aneuryzma"
+        },
+        "malformation": {
+          "label": "arteriovenózní malformace"
+        },
+        "anticolagulant": {
+          "label": "spojená s antikoagulační léčbou"
+        },
+        "angiopathy": {
+          "label": "amyloidová angiopatie"
+        },
+        "brain_tumor": {
+          "label": "Krvácení do mozkového nádoru"
+        },
+        "cvt": {
+          "label": "Mozková žilní trombóza"
+        },
+        "other": {
+          "label": "jiné / neznámé"
+        }
+      },
+      "treatment": {
+        "any_treatment": {
+          "label": "Byl proveden neurochirugický zákrok?",
+          "yes": "ano",
+          "no": "ne",
+          "error": {
+            "multiselect": "zvolte nejméně jednu z následujících možností"
+          }
+        },
+        "hematoma_evacuation_minimal": {
+          "label": "minimálně invazivní evakuace"
+        },
+        "hematoma_evacuation_open": {
+          "label": "evakuace hematomu otevřenou kraniotomií"
+        },
+        "aspiration": {
+          "label": "stereotaktická endoskopická aspirace"
+        },
+        "ventricular_drainage": {
+          "label": "zevní komorová drenáž"
+        },
+        "craniectomy": {
+          "label": "dekompresní kraniektomie"
+        }
+      },
+      "evacuation_timestamp": {
+          "label": "Datum a čas evakuace hematomu",
+          "null": "neznámé",
+          "error": {
+            "formatMinimum": "Evakuace hematomu musí následovat po všech předchozích klinických událostech"
+          }
+      },
+      "no_neurosurgery_reason": {
+          "label": "Jaký byl hlavní důvod neprovedení neurochirurgického zákroku?",
+          "size": "velikost hematomu",
+          "location": "umístění hematomu",
+          "consent": "pacient/rodina nedali souhlas",
+          "cost": "náklady na proceduru",
+          "facility_na": "není dostupné neurochirgické vybavení",
+          "specialist_na": "není dostupný specialista",
+          "poor_prognosis": "špatná prognóza",
+          "not_reported": "důvod nebyl uveden v dokumentaci",
+          "other": "jiný"
+      },
+      "anticoagulant_reversal": {
+        "label": "Jaká antikoagulační reverzní léčba byla použita?",
+        "andexanete": "andexanet alfa",
+        "idarucizumab": "idarucizumab",
+        "plasma": "čerstvá mražená plazma",
+        "prothrombin": "koncentrát protrombinového komplexu",
+        "vitaminK": "vitamín K",
+        "protamine":"protamin sulfát",
+        "tranexamic":"kyselina tranexamová",
+        "aminocaproic":"kyselina aminokapronová",
+        "ciraparantag":"ciraparantag",
+        "other": "jiná",
+        "none": "žádná"
+      },
+      "no_anticoagulant_reversal_reason": {
+        "label": "Důvod proč nebyla podána antikoagulační reverzní látka",
+        "consent": "pacient/rodina nedali souhlas",
+        "cost": "náklady na léčbu",
+        "not_available": "nedostupnost reverzní látky",
+        "not_licenced": "reverzní látka není licencovaná pro tuto indikaci",
+        "criteria_not_met": "nebyla splněna kriteria pro použití reverzní látky",
+        "no_pill": "pacient si nevzal antikoagulancium před ICH (zapomněl si vzít pilulku)",
+        "not_reported": "důvod nebyl uveden v dokumentaci"
+      },
+      "initiation_timestamp": {
+        "label": "Zahájení podání antidota",
+        "error": {
+          "formatMinimum": "Zahájení podání antidota musí následovat po všech předchozích klinických událostech"
+        }
+      }
+    },
+    "subarachnoid_hemorrhage": {
+      "hunt_hess_score": {
+        "1": "1 (lucidní; mírná bolest hlavy; mírná ztuhlost šíje)",
+        "2": "2 (středně těžká až těžká bolest hlavy; ztuhlost šíje; žádný neurologický deficit kromě obrny hlavových nervů)",
+        "3": "3 (somnolence; minimální neurologický deficit)",
+        "4": "4 (stuporózní; středně těžká až těžká hemiparéza; příp. časná decerebrační rigidita a vegetativní poruchy)",
+        "5": "5 (hluboké kóma; těžký neurologický deficit)",
+        "label": "Hunt Hess skóre"
+      },
+      "treatment": {
+        "any_treatment": {
+          "label": "Byla provedena intervence?",
+          "yes": "ano",
+          "no": "ne",
+          "error": {
+            "multiselect": "zvolte nejméně jednu z následujících možností"
+          }
+        },
+        "coiling": {
+          "label": "endovaskulární (coiling)"
+        },
+        "clipping": {
+          "label": "neurochirurgická (clipping)"
+        },
+        "drainage": {
+          "label": "ventrikulární drenáž"
+        },
+        "craniectomy": {
+          "label": "dekompresní kraniektomie"
+        },
+        "other": {
+          "label": "jiná"
+        }
+      },
+      "nimodipine_treatment": {
+        "label": "Byl podán nimodipin?",
+        "in_24h": "ano, do 24 hodin od přijetí",
+        "after_24h": "ano, déle než 24 hodin od přijetí",
+        "not_administered": "nepodán"
+      }
+    },
+    "cerebral_venous_thrombosis": {
+      "treatment": {
+        "any_treatment": {
+          "label": "Byla provedena léčba?",
+          "yes": "ano",
+          "no": "ne",
+          "error": {
+            "multiselect": "zvolte nejméně jednu z následujících možností"
+          }
+        },
+        "anticoagulation": {
+          "label": "antikoagulace"
+        },
+        "thrombectomy": {
+          "label": "endovaskulární intervence - trombektomie"
+        },
+        "thrombolysis": {
+          "label": "endovaskulární intervence – lokální trombolýza"
+        },
+        "craniectomy": {
+          "label": "neurochirurgický výkon (dekompresivní kraniektomie)"
+        }
+      }
+    },
+    "transient_ischemic_stroke": {
+      "clinical_symptoms": {
+        "label": "Klinické symptomy TIA",
+        "weakness": "jednostranná slabost (paréza)",
+        "speech_disturbance": "porucha řeci bez slabosti",
+        "other": "jiné"
+      },
+      "symptoms_duration": {
+        "label": "Délka trvání symptomů",
+        "0to10": "méně než 10 minut",
+        "10to59": "10 až 59 minut",
+        "over60": "60 a více minut",
+        "null": "neznámé"
+      }
+    },
+    "stroke_mimics": {
+      "diagnosis": {
+        "label": "Výsledná diagnóza",
+        "migraine": "migréna",
+        "seizure": "záchvat",
+        "delirium": "delírium",
+        "imbalance": "elektrolytická nebo metabolická nerovnováha",
+        "disorder": "funkční porucha",
+        "other": "jiná"
+      }
+    }
+  },
+  "post_acute_care": {
+    "24_hour_hospitalized_time": {
+      "label": "Byl pacient hospitalizován déle než 24h?",
+      "yes": "ano",
+      "no": "ne"
+    },
+    "highest_systolic": {
+      "label": "Nejvyšší hodnota systolického tlaku 24h po přijetí",
+      "null": "neznámé"
+    },
+    "patient_ventilated": {
+      "label": "Pacient napojen na umělou plicní ventilaci?",
+      "yes": "ano",
+      "no": "ne"
+    },
+    "craniectomy": {
+      "label": "Byla provedena dekompresní kraniektomie?",
+      "yes": "ano",
+      "no": "ne"
+    },
+    "carotid_arteries": {
+      "carotid_arteries_imaging": {
+        "label": "Bylo provedeno zobrazení karotid?",
+        "yes": "ano",
+        "no": "ne"
+      },
+      "carotid_stenosis": {
+        "label": "Symptomatická stenóza karotid",
+        "1to49": "pod 50% (slabá)",
+        "50to70": "50% - 70% (střední)",
+        "70to99": "70% - 99% (vážná)",
+        "no": "bez stenózy (0%)",
+        "occlusion": "okluze (100%)",
+        "null": "nenahlášeno"
+      },
+      "carotid_endarterectomy_within_2_weeks": {
+        "label": "Byla provedena karotická endarterektomie nebo stenting během dvou týdnů po CMP",
+        "24h_to_2weeks": "ano, po 24 hodinách do 2 týdnů",
+        "within_24h": "ano, do 24 hod.",
+        "no": "ne",
+        "after_2weeks": "později naž 2 týdny"
+      }
+    },
+    "atrial_fibrillation_or_flutter": {
+      "label": "Fibrilace/flutter síní (AF)",
+      "detected": "zjištěná během hospitalizace",
+      "no_AF": "AF nezjištěna",
+      "not_screened": "nevyšetřená"
+    },
+    "stroke_etiology": {
+      "etiology_category": {
+        "label": "Etiologie CMP",
+        "la_atherosclerosis": "ateroskleróza velkých tepen (např. karotická nebo bazilární stenóza)",
+        "cardioembolism": "kardioembolismus (např. AF/flutter/protetická srdeční chlopeň)",
+        "lacunar": "nemoc malých cév/lakunární",
+        "cryptogenic": "kryptogenní cévní mozková příhoda (včetně ESUS)",
+        "other": "CMP jiné určené etiologie (disekce, vaskulopatie, hematologická porucha,...)"
+      },
+      "other_determined_etiology": {
+        "label": "Upřesněte jinou etiologii",
+        "vasculitis": "vaskulitida",
+        "dissection": "disekce",
+        "coagulation_system_disorders": "poruchy koagulačního systému",
+        "hematological_disorders": "hematologické (krevní) poruchy",
+        "fibromuscular_dysplasia": "fibromuskulární dysplazie",
+        "reversible_cerebral_vasoconstriction_syndromes": "reverzibilní cerebrální vazokonstrikční syndromy",
+        "radiation_induced_vasculopathy": "radiačně indukovaná vaskulopatie",
+        "moyamoya_disease": "Moyamoyova nemoc",
+        "fabrys_disease": "Fabryho nemoc",
+        "cadasil": "CADASIL (cerebrální autozomálně dominantní arteriopatie se subkortikálními infarkty a leukoencefalopatií)",
+        "giant_cell_arteritis": "obří buněčná (temporální) arteritida",
+        "antiphospholipid_syndrome": "syndrom antifosfolipidových protilátek",
+        "sickle_cell_anemia": "srpkovitá anémie",
+        "migrainous_stroke": "migrenózní CMP",
+        "cerebral_venous_sinus_thrombosis": "trombóza mozkových žilních dutin"
+      }
+    },
+    "vte": {
+      "any_vte": {
+        "label": "Byla provedena prevence tromboembolické nemoci (VTE)?",
+        "yes": "ano",
+        "no": "ne",
+        "null": "neznámé",
+        "error": {
+          "multiselect": "zvolte nejméně jednu z následujících možností"
+        }
+      },
+      "ufh": {
+        "label": "nízká dávka nefrakcionovaného heparinu (UFH)"
+      },
+      "lmwh": {
+        "label": "heparin s nízkou molekulární hmotností (LMWH)"
+      },
+      "ipc": {
+        "label": "přerušovaná pneumatická kompresní zařízení (IPC)"
+      },
+      "gcs": {
+        "label": "odstupňované kompresní punčochy (GCS)"
+      },
+      "warfarin": {
+        "label": "warfarin předepsán pouze pro VTE"
+      },
+      "vfp": {
+        "label": "žilní nožní pumpa (VFP)"
+      },
+      "xa_inhibitor": {
+        "label": "inhibitor orálního faktoru Xa předepsán pouze pro VTE"
+      },
+      "other": {
+        "label": "jiný"
+      }
+    },
+    "post_stroke_complications": {
+      "any_post_stroke_complication": {
+        "label": "Nastaly komplikace po CMP? ",
+        "yes": "ano",
+        "no": "ne",
+        "null": "neznámé",
+        "error": {
+          "multiselect": "zvolte nejméně jednu z následujících možností"
+        }
+      },
+      "pneumonia": {
+        "label": "pneumonie"
+      },
+      "dvt": {
+        "label": "hluboká žilní trombóza (DVT)"
+      },
+      "pulmonary_embolism": {
+        "label": "plicní embolie"
+      },
+      "urinary_infection": {
+        "label": "infekce močových cest"
+      },
+      "pressure_sores": {
+        "label": "dekubity"
+      },
+      "drip_site_sepsis": {
+        "label": "infekce žilního vstupu"
+      },
+      "recurrence_or_extension": {
+        "label": "recidiva CMP"
+      },
+      "falling": {
+        "label": "pád"
+      },
+      "other": {
+        "label": "jiné"
+      }
+    },
+    "post_recanalization_imaging": {
+      "imaging_type": {
+        "label": "Bylo provedeno kontrolní CT/MR?",
+        "ct": "ano, CT",
+        "mr": "ano, MR",
+        "no": "ne"
+      },
+      "findings": {
+        "any_finding": {
+          "label": "Přítomnost některého z níže uvedených nálezů",
+          "yes": "Ano",
+          "no": "Ne"
+        },
+        "brain_infarct": {
+          "label": "Akutní infarkt"
+        },
+        "remote_bleeding": {
+          "label": "Krvácení mimo místo infarktu"
+        },
+        "hemorrhagic_transformation": {
+          "label": "Hemoragická transformace"
+        },
+        "hemorrhagic_transformation_type": {
+          "label": "Typ hemoragické transformace",
+          "hi_1": "Hemoragický infarkt I (HI I)",
+          "hi_2": "Hemoragický infarkt II (HI II)",
+          "ph_1": "Parenchymové krvácení I (PH I)",
+          "ph_2": "Parenchymové krvácení II (PH II)"
+        }
+      }
+    },
+    "post_neurosurgery_imaging": {
+        "label": "Bylo provedeno kontrolní CT/MR?",
+        "ct": "ano, CT",
+        "mr": "ano, MR",
+        "no": "ne"
+    },
+    "bleeding_volume_control": {
+        "label": "Objem krvácení na kontrolním CT/MR (ml) [počítáno jako A(cm)xB(cm)xC(cm)/2]",
+        "placeholder": "0-300"
+    },
+    "hydrocephalus": {
+        "label": "Byl diagnostikován hydrocefalus?",
+        "yes":"ano",
+        "no":"ne"
+    },
+    "shunt_placed": {
+      "label": "Byla aplikován shunt v případě hydrocefalu?",
+      "yes":"ano",
+      "no":"ne"
+    },
+    "fever": {
+      "day_1_fever_checks": {
+        "0": "0x",
+        "1": "1x",
+        "2": "2x",
+        "3": "3x",
+        "4": "4x nebo víckrát",
+        "label": "Počet měření teploty 1. den"
+      },
+      "day_2_fever_checks": {
+        "0": "0x",
+        "1": "1x",
+        "2": "2x",
+        "3": "3x",
+        "4": "4x nebo víckrát",
+        "label": "Počet měření teploty 2. den"
+      },
+      "day_3_fever_checks": {
+        "0": "0x",
+        "1": "1x",
+        "2": "2x",
+        "3": "3x",
+        "4": "4x nebo víckrát",
+        "label": "Počet měření teploty 3. den"
+      },
+      "fever_diagnosed": {
+        "label": "Byla naměřena teplota nad 37.5˚C během prvních 72h?",
+        "yes": "ano",
+        "no": "ne",
+        "null": "neznámé"
+      },
+      "paracetamol_on_fever": {
+        "label": "Byl podán paracetamol nebo jiné antipyretikum při první zvýšené teplotě?",
+        "within_1h": "ano, do 1 hodiny od první zvýšené teploty",
+        "after_1h": "ano, po 1 hodině od první zvýšené teploty",
+        "no": "ne",
+        "contraindicated": "kontraindikováno"
+      }
+    },
+    "hyperglycemia": {
+      "day_1_hyperglycemia_checks": {
+        "0": "0x",
+        "1": "1x",
+        "2": "2x",
+        "3": "3x",
+        "4": "4x nebo víckrát",
+        "label": "Počet měření glykémie 1. den"
+      },
+      "day_2_hyperglycemia_checks": {
+        "0": "0x",
+        "1": "1x",
+        "2": "2x",
+        "3": "3x",
+        "4": "4x nebo víckrát",
+        "label": "Počet měření glykémie 2. den"
+      },
+      "day_3_hyperglycemia_checks": {
+        "0": "0x",
+        "1": "1x",
+        "2": "2x",
+        "3": "3x",
+        "4": "4x nebo víckrát",
+        "label": "Počet měření glykémie 3. den"
+      },
+      "highest_glucose": {
+        "label": "Jaká byla nejvyšší hodnota glykémie během 48h po přijetí včetně 1. měření? [mg/dL]",
+        "placeholder": "0.00",
+        "null": "neznámé"
+      },
+      "insulin_on_hyperglycemia": {
+        "label": "Byl podán inzulín při první zvýšené hladině glukózy?",
+        "within_1h": "ano, do 1 hodiny od první zvýšené hladiny glukózy",
+        "after_1h": "ano, po 1 hodině od první zvýšené hladiny glukózy",
+        "no": "ne",
+        "null": "neznámé"
+      }
+    },
+    "swallow": {
+      "swallowing_screening": {
+        "label": "Byl proveden test polykání?",
+        "within_4h": "ano, do 4 hodin",
+        "4h_to_24h": "ano, do 24 hodin po přijetí",
+        "after_24h": "ano, po 24 hodinách po přijetí",
+        "not_done": "neprovedeno",
+        "not_applicable": "nelze použít (pacient intubovaný, NGS atd.)"
+      },
+      "swallowing_screening_type": {
+        "label": "Který test polykání?",
+        "guss": "GUSS test",
+        "assist": "ASSIST test",
+        "vvst": "V-VST test",
+        "watertest": "test pitnou vodou",
+        "other": "jiný (dávivý reflex se nebere v úvahu)"
+      },
+      "swallowing_screening_performer": {
+        "label": "Kdo provedl test polykání?",
+        "nurse": "sestra",
+        "physician": "lékař",
+        "speech_therapist": "logoped",
+        "other": "jiné"
+      }
+    },
+    "rehabilitation": {
+      "physiotherapy": {
+        "label": "Podstoupil pacient fyzioterapii?",
+        "yes": "ano",
+        "no": "ne",
+        "not_required": "nebyla potřeba"
+      },
+      "occup_therapy": {
+        "label": "Podstoupil pacient ergoterapii?",
+        "yes": "ano",
+        "no": "ne",
+        "not_required": "nebyla potřeba"
+      },
+      "speech_therapy": {
+        "label": "Podstoupil pacient logoterapii?",
+        "yes": "ano",
+        "no": "ne",
+        "not_required": "nebyla potřeba"
+      }
+    }
+  },
+  "discharge": {
+    "destination": {
+      "discharge_destination": {
+        "label": "Místo, kam byl pacient propuštěn",
+        "home": "domů",
+        "same_center": "překlad v rámci stejného zdravotnického zařízení (ZZ)",
+        "another_center": "překlad do jiného zdravotnického zařízení (ZZ)",
+        "social_care": "zařízení sociální péče",
+        "dead": "zemřel",
+        "against_medical_advice": "propuštěn proti lékařskému doporučení"
+      },
+      "same_center_department": {
+        "label": "Překlad v rámci stejného zdravotnického zařízení (ZZ)",
+        "rehab": "oddělení rehabilitace",
+        "post_care": "lůžko následné péče",
+        "another_department": "jiné oddělení"
+      },
+      "another_center_type": {
+        "label": "Překlad do jiného zdravotnického zařízení (ZZ)",
+        "primary_center": "primární iktové centrum",
+        "comprehensive_center": "komplexní cerebrovaskulární centrum",
+        "standard_hospital": "jiná nemocnice"
+      },
+      "another_center_department": {
+        "label": "Překlad do jiného ZZ - typ oddělení",
+        "rehab": "oddělení rehabilitace",
+        "post_care": "lůžko následné péče",
+        "neurology": "neurologie",
+        "another_department": "jiné oddělení"
+      }
+    },
+    "discharge_date": {
+      "label": "Datum propuštění",
+      "error": {
+        "formatMinimum": "Datum propuštění musí následovat po datu CMP"
+      }
+    },
+    "mrs_score": {
+      "label": "mRS skóre při propuštění",
+      "null": "nezjišteno"
+    },
+    "nihss": {
+      "label": "NIHSS skóre při propuštění",
+      "placeholder": "0-42",
+      "null": "nezjišteno"
+    },
+    "systolic_pressure": {
+      "label": "Systolický tlak v 7. den nebo při propuštění, pokud nastalo dříve",
+      "null": "neznámé"
+    },
+    "glucose": {
+      "label": "Hladina glykémie v 7. den nebo při propuštění, pokud nastalo dříve [mg/dL]",
+      "placeholder": "0.00",
+      "null": "neznámé"
+    },
+    "medication": {
+      "any_treatment_prescribed": {
+        "label": "Byla předepsána medikace při propuštění?",
+        "yes": "ano",
+        "no": "ne",
+        "error": {
+          "multiselect": "zvolte nejméně jednu z následujících možností"
+        }
+      },
+      "antidiabetics": {
+        "label": "antidiabetika"
+      },
+      "antihypertensives": {
+        "label": "antihypertenzivní medikace"
+      },
+      "antiplatelets": {
+        "label": "protidestičková medikace (antiagregancia)"
+      },
+      "anticoagulants": {
+        "label": "antikoagulancia"
+      },
+      "statin": {
+        "label": "statiny"
+      },
+      "other": {
+        "label": "jiná"
+      },
+      "antiplatelet_substances": {
+        "asa": {
+          "label": "ASA (aspirin)"
+        },
+        "cilostazol": {
+          "label": "cilostazol"
+        },
+        "clopidogrel": {
+          "label": "clopidogrel"
+        },
+        "ticagrelor": {
+          "label": "ticagrelor"
+        },
+        "ticlopidine": {
+          "label": "ticlopidine"
+        },
+        "prasugrel": {
+          "label": "prasugrel"
+        },
+        "dipyridamole": {
+          "label": "dipyridamol, pomalé uvolňování"
+        },
+        "other": {
+          "label": "jiné antiagregancium"
+        }
+      },
+      "anticoagulant_substances": {
+        "warfarin": {
+          "label": "antagonisté vitaminu K (warfarin)"
+        },
+        "heparin": {
+          "label": "LMW heparin/heparin"
+        },
+        "dabigatran": {
+          "label": "dabigatran"
+        },
+        "rivaroxaban": {
+          "label": "rivaroxaban"
+        },
+        "apixaban": {
+          "label": "apixaban"
+        },
+        "edoxaban": {
+          "label": "edoxaban"
+        },
+        "other": {
+          "label": "jiné antikoagulancium"
+        }
+      },
+      "no_anticoagulant_reasons": {
+        "label": "Důvody proč nebylo předepsáno žádné antikoagulancium",
+        "consent": "nebyl udělen souhlas pacienta/rodiny",
+        "planned": "předepsání plánováno se zpožděním",
+        "allergy": "alergie nebo komplikace ve spojistosti s podáním warfarinu nebo heparinů",
+        "mental": "psychický stav",
+        "bleeding": "riziko krvácení nebo přerušení léčby z důvodu krvácení",
+        "falls": "riziko upadnutí",
+        "sideeffects": "vážné vedlejší účinky léku",
+        "terminal": "terminální fáze nemoci/pouze opatření pro pohodlí pacienta"
+      }
+    },
+    "stroke_management_appointment": {
+      "label": "Naplánována následná schůzka?",
+      "yes": "ano",
+      "recommended": "ne, ale doporučeno",
+      "no": "ne"
+    },
+    "smoking_cessation_recommended": {
+      "label": "Byla pacientovi doporučena poradna pro odvykání kouření?",
+      "yes": "ano",
+      "no": "ne"
+    }
+  },
+  "post-discharge": {
+    "3_month_follow_up": {
+      "contact_mode": {
+        "label": "Způsob kontaktu",
+        "phone": "telefon/video (pacient nebo pečovatel)",
+        "visit": "návštěva v nemocnici",
+        "mobile": "mobilní aplikace",
+        "web": "webová aplikace",
+        "no_response": "pacient nebo opatrovník nereagoval na výzvu",
+        "not_contacted": "nebyl kontaktován"
+      },
+      "contact_date": {
+        "label": "Datum kontaktu"
+      },
+      "mrs_score": {
+        "label": "Hodnota 3-měsíční mRS"
+      }
+    }
+  },
+  "error": {
+    "required": "povinná položka",
+    "anyOf": "Vyberte alespoň jeden z následujících",
+    "maximum": "musí být {{comparison}} {{limit}}",
+    "minimum": "musí být {{comparison}} {{limit}}"
+  }
+}
