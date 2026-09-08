@@ -20,12 +20,13 @@ import {
 // TODO: move this into a config
 const DIMBU_URL = "https://quest.ms.mff.cuni.cz/dimbu";
 // Thresholds set basd on the email from Vojtěch Lanz from 20th Aug 2025 with those charts
-const EE_MINIMAL_QUESTION_CONFIDENCE = 0.5; // the model must perform well on this question
+// Then confidences overriden to 0.001 based on email from Ontotext 4th Sep 2026
+const EE_MINIMAL_QUESTION_CONFIDENCE = 0.001; // 0.5; // the model must perform well on this question
 const EE_MINIMAL_QUESTION_FREQUENCY = 0.1; // the model must be well-enough-trained for the question
 // We purposefully ignore the prediction_confidence, which is just the softmax value of the
 // model for the specific inference data, because this value is hard to interpret.
 const LIMIT_EVIDENCE_ANSWERS_TO = 5;
-const AP_MINIMAL_QUESTION_CONFIDENCE = 0.8;
+const AP_MINIMAL_QUESTION_CONFIDENCE = 0.001; // 0.8;
 const AP_MINIMAL_QUESTION_FREQUENCY = 0.1;
 
 // enables debug logging
