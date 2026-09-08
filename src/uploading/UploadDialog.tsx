@@ -30,7 +30,7 @@ import {
 } from "./pageLoadingIntercept";
 import { UploadServerConnection } from "./UploadServerConnection";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import { AppFile, DocMarkerContext } from "doc-marker";
+import { AppFile, DocMarkerContext, SerializedFileJson } from "doc-marker";
 import { ResqUser } from "./ResqUser";
 import config from "../config";
 import { DummyConnection } from "./DummyConnection";
@@ -88,7 +88,7 @@ export function UploadDialog() {
     setRecordId(null);
 
     // load the file
-    const file = filesDatabase.loadFile(fileUuid);
+    const file = await filesDatabase.loadFile(fileUuid!);
     if (file === null) {
       setIsOpen(false);
       return;
@@ -164,7 +164,7 @@ export function UploadDialog() {
 
       // store the modified file JSON
       fileRef.current = AppFile.fromJson(dmOptions, modifiedFileJson);
-      filesDatabase.storeFile(fileRef.current);
+      await filesDatabase.storeFile(fileRef.current);
 
       // update UI
       setCaseId(modifiedFileJson!["resqCaseId"] || null);
